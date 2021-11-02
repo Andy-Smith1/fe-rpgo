@@ -25,6 +25,8 @@ const ActiveChallengeMap = () => {
   const [stepCount, setStepCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
+  const [result, setResult] = useState({});
+  // const [locationArray, setLocationArray] = useState([]);
 
   useEffect(() => {
     Pedometer.requestPermissionsAsync();
@@ -62,6 +64,12 @@ const ActiveChallengeMap = () => {
         longitudeDelta: 0.01,
         latitudeDelta: 0.01,
       });
+
+      // setLocationArray((currArray) => {
+      //   const obj = { ...position };
+      //   obj.initial = "INITIAL";
+      //   return [...currArray, obj];
+      // });
     })();
   }, []);
 
@@ -73,6 +81,7 @@ const ActiveChallengeMap = () => {
       setLocation({
         longitude: newPosition.coords.longitude,
         latitude: newPosition.coords.latitude,
+        altitude: newPosition.coords.altitude,
         longitudeDelta: 0.01,
         latitudeDelta: 0.01,
       });
@@ -83,6 +92,7 @@ const ActiveChallengeMap = () => {
             currMeters + (newPosition.coords.altitude - prevElevation)
         );
       }
+
       setPrevElevation(newPosition.coords.altitude);
 
       if (prevCoords.longitude) {
@@ -112,10 +122,12 @@ const ActiveChallengeMap = () => {
           },
         ];
       });
+
+      // setLocationArray((currArray) => {
+      //   return [...currArray, newPosition];
+      // });
     }, 5000);
   }, [polylineArray]);
-  
-  console.log(metersClimbed)
 
   return (
     <View>
@@ -137,7 +149,14 @@ const ActiveChallengeMap = () => {
       )}
       <Button
         onPress={() => {
-          console.log(metersClimbed, distanceTravelled, stepCount, timeElapsed);
+          setResult({
+            metersClimbed,
+            distanceTravelled,
+            stepCount,
+            timeElapsed: msToTime(timeElapsed),
+            polylineArray,
+          });
+          console.log(result);
         }}
         title="the deets"
         style={styles.button}
@@ -156,6 +175,6 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    height: 200
-  }
+    height: 200,
+  },
 });

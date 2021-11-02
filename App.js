@@ -7,10 +7,18 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 
 export default function App() {
+  const [activeChallenge, setActiveChallenge] = useState({
+    active: false,
+    challenge: { type: "distanceTravelled" },
+    data: {},
+  });
   return (
     <View style={styles.container}>
       {/* <Map /> */}
-      <ActiveChallengeMap />
+      <ActiveChallengeMap
+        setActiveChallenge={setActiveChallenge}
+        activeChallenge={activeChallenge}
+      />
     </View>
   );
 }
