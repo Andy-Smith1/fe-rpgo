@@ -4,19 +4,39 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
+import { getDistance } from "geolib";
+
 
 const ActiveChallengeMap = () => {
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
   const [metersClimbed, setMetersClimbed] = useState(0);
   const [prevElevation, setPrevElevation] = useState(0);
+  const [distanceTravelled, setDistanceTravelled] = useState(0);
+  const [prevCoords, setPrevCoords] = useState({});
+  
+
+
+
+
 
   useEffect(() => {
     (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
       let position = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.BestForNavigation,
       });
       setPrevElevation(position.coords.altitude);
+
+      setPrevCoords({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
 
       setLocation({
         longitude: position.coords.longitude,
@@ -32,6 +52,13 @@ const ActiveChallengeMap = () => {
       let newPosition = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.BestForNavigation,
       });
+      setLocation({
+        longitude: newPosition.coords.longitude,
+        latitude: newPosition.coords.latitude,
+        longitudeDelta: 0.01,
+        latitudeDelta: 0.01,
+      });
+
       if (prevElevation !== 0 && newPosition.coords.altitude > prevElevation) {
         setMetersClimbed(
           (currMeters) =>
@@ -39,6 +66,20 @@ const ActiveChallengeMap = () => {
         );
       }
       setPrevElevation(newPosition.coords.altitude);
+
+      if (prevCoords.longitude) {
+        const calculatedDistance = getDistance(prevCoords, {
+          longitude: newPosition.coords.longitude,
+          latitude: newPosition.coords.latitude,
+        });
+        setDistanceTravelled((currDist) => {
+          return currDist + calculatedDistance;
+        });
+      }
+      setPrevCoords({
+        longitude: newPosition.coords.longitude,
+        latitude: newPosition.coords.latitude,
+      });
 
       setPolylineArray((currArr) => {
         return [
@@ -53,7 +94,7 @@ const ActiveChallengeMap = () => {
     }, 5000);
   }, [polylineArray]);
 
-  console.log(metersClimbed);
+  // console.log(stepCount);
 
   return (
     <View>
