@@ -1,11 +1,19 @@
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  Platform,
+  Button,
+} from "react-native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
 import { getDistance } from "geolib";
-
+import { Pedometer } from "expo-sensors";
+import { msToTime } from "../utils/formatting";
 
 const ActiveChallengeMap = () => {
   const [location, setLocation] = useState(null);
@@ -14,11 +22,19 @@ const ActiveChallengeMap = () => {
   const [prevElevation, setPrevElevation] = useState(0);
   const [distanceTravelled, setDistanceTravelled] = useState(0);
   const [prevCoords, setPrevCoords] = useState({});
-  
+  const [stepCount, setStepCount] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [timeElapsed, setTimeElapsed] = useState(0);
 
+  useEffect(() => {
+    Pedometer.requestPermissionsAsync();
+  }, []);
 
-
-
+  if (Platform.OS === "ios") {
+    Pedometer.watchStepCount((result) => {
+      setStepCount(result.steps);
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -37,6 +53,8 @@ const ActiveChallengeMap = () => {
         longitude: position.coords.longitude,
         latitude: position.coords.latitude,
       });
+
+      setStartTime(position.timestamp);
 
       setLocation({
         longitude: position.coords.longitude,
@@ -81,6 +99,9 @@ const ActiveChallengeMap = () => {
         latitude: newPosition.coords.latitude,
       });
 
+      if (startTime !== 0) {
+        setTimeElapsed(newPosition.timestamp - startTime);
+      }
       setPolylineArray((currArr) => {
         return [
           ...currArr,
@@ -93,8 +114,8 @@ const ActiveChallengeMap = () => {
       });
     }, 5000);
   }, [polylineArray]);
-
-  // console.log(stepCount);
+  
+  console.log(metersClimbed)
 
   return (
     <View>
@@ -114,6 +135,13 @@ const ActiveChallengeMap = () => {
           />
         </MapView>
       )}
+      <Button
+        onPress={() => {
+          console.log(metersClimbed, distanceTravelled, stepCount, timeElapsed);
+        }}
+        title="the deets"
+        style={styles.button}
+      />
     </View>
   );
 };
@@ -122,7 +150,12 @@ export default ActiveChallengeMap;
 
 const styles = StyleSheet.create({
   map: {
+    flex: 3,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
+  button: {
+    flex: 1,
+    height: 200
+  }
 });
