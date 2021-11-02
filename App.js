@@ -1,12 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import * as React from "react";
+import { useState } from "react";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
+import Map from "./components/Map";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import ActiveChallengeMap from "./components/ActiveChallengeMap";
 
 export default function App() {
+  const [activeChallenge, setActiveChallenge] = useState({
+    active: false,
+    challenge: { type: "distanceTravelled" },
+    data: {},
+  });
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {/* <Map /> */}
+      <ActiveChallengeMap
+        setActiveChallenge={setActiveChallenge}
+        activeChallenge={activeChallenge}
+      />
     </View>
   );
 }
@@ -14,8 +26,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
