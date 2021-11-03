@@ -11,7 +11,7 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
-import { getDistance } from "geolib";
+import { getDistance, getPreciseDistance } from "geolib";
 import { Pedometer } from "expo-sensors";
 import { msToTime } from "../utils/formatting";
 
@@ -96,7 +96,7 @@ const ActiveChallengeMap = () => {
       setPrevElevation(newPosition.coords.altitude);
 
       if (prevCoords.longitude) {
-        const calculatedDistance = getDistance(prevCoords, {
+        const calculatedDistance = getPreciseDistance(prevCoords, {
           longitude: newPosition.coords.longitude,
           latitude: newPosition.coords.latitude,
         });
