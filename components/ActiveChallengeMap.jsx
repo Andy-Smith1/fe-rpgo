@@ -11,11 +11,12 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
-import { getDistance } from "geolib";
+import { getDistance, getPreciseDistance } from "geolib";
 import { Pedometer } from "expo-sensors";
 import { msToTime } from "../utils/formatting";
+import ActivityProgressBar from "./ActivityProgressBar";
 
-const ActiveChallengeMap = () => {
+const ActiveChallengeMap = ({ activeChallenge }) => {
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
   const [metersClimbed, setMetersClimbed] = useState(0);
@@ -25,8 +26,11 @@ const ActiveChallengeMap = () => {
   const [stepCount, setStepCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const [result, setResult] = useState({});
-  // const [locationArray, setLocationArray] = useState([]);
+  const [progress, setProgress] = useState({
+    distanceTravelled: 0,
+    metersClimbed: 0,
+    stepCount: 0,
+  });
 
   useEffect(() => {
     Pedometer.requestPermissionsAsync();
@@ -64,12 +68,6 @@ const ActiveChallengeMap = () => {
         longitudeDelta: 0.01,
         latitudeDelta: 0.01,
       });
-
-      // setLocationArray((currArray) => {
-      //   const obj = { ...position };
-      //   obj.initial = "INITIAL";
-      //   return [...currArray, obj];
-      // });
     })();
   }, []);
 
@@ -96,7 +94,7 @@ const ActiveChallengeMap = () => {
       setPrevElevation(newPosition.coords.altitude);
 
       if (prevCoords.longitude) {
-        const calculatedDistance = getDistance(prevCoords, {
+        const calculatedDistance = getPreciseDistance(prevCoords, {
           longitude: newPosition.coords.longitude,
           latitude: newPosition.coords.latitude,
         });
@@ -123,14 +121,22 @@ const ActiveChallengeMap = () => {
         ];
       });
 
-      // setLocationArray((currArray) => {
-      //   return [...currArray, newPosition];
-      // });
+      setProgress({
+        metersClimbed,
+        distanceTravelled,
+        stepCount,
+        timeElapsed: msToTime(timeElapsed),
+        polylineArray,
+      });
     }, 5000);
   }, [polylineArray]);
 
   return (
     <View>
+      <ActivityProgressBar
+        activeChallenge={activeChallenge}
+        progress={progress}
+      />
       {location && (
         <MapView
           style={styles.map}
@@ -147,20 +153,6 @@ const ActiveChallengeMap = () => {
           />
         </MapView>
       )}
-      <Button
-        onPress={() => {
-          setResult({
-            metersClimbed,
-            distanceTravelled,
-            stepCount,
-            timeElapsed: msToTime(timeElapsed),
-            polylineArray,
-          });
-          console.log(result);
-        }}
-        title="the deets"
-        style={styles.button}
-      />
     </View>
   );
 };
