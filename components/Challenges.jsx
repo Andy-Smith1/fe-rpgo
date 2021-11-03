@@ -70,7 +70,7 @@ const testChallenges = [
     reward: "blueTrophy.png",
     activity_type: "stepCount",
     timed_challenge: [true, new Date("December 17, 2021 03:24:00")],
-    activity_value: 1000,
+    activity_value: 10,
   },
   {
     id: 2,

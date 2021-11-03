@@ -3,18 +3,16 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 
 const ActivityProgressBar = ({ activeChallenge, progress }) => {
-  // if (
-  //   progress[activeChallenge.challenge.activity_type] >=
-  //   activeChallenge.challenge.activityValue
-  // ) {
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text>Challenge Complete</Text>
-  //     </View>
-  //   );
-  // }
+  if (
+    progress[activeChallenge.activity_type] >= activeChallenge.activity_value
+  ) {
+    return (
+      <View style={styles.container}>
+        <Text>Challenge Complete</Text>
+      </View>
+    );
+  }
 
-  console.log(progress);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{activeChallenge.title}</Text>
