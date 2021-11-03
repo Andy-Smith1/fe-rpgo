@@ -41,7 +41,7 @@ export default Challenges;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2892D7",
+    backgroundColor: "#536b78",
   },
   listItem: {
     padding: 20,
@@ -49,16 +49,25 @@ const styles = StyleSheet.create({
     margin: 20,
     borderColor: "white",
     borderStyle: "solid",
+    borderRadius: 10,
     borderWidth: 3,
+    backgroundColor: "#7c98b3",
+    shadowColor: "black",
+    shadowRadius: 10,
+    shadowOpacity: 0.5,
   },
   title: {
     color: "white",
-    fontSize: 20,
+    fontSize: 24,
     paddingBottom: 10,
     fontWeight: "bold",
+    fontFamily: "GameFont",
   },
   description: {
     color: "white",
+    fontFamily: "GameFont",
+    fontSize: 18,
+    color: "#cee5f2",
   },
 });
 

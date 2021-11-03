@@ -7,10 +7,16 @@ import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Challenges from "./components/Challenges";
+import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  let [fontsLoaded, error] = useFonts({
+    GameFont: VT323_400Regular,
+  });
+
+  if (!fontsLoaded) return null;
   return (
     <NavigationContainer>
       <Stack.Navigator
