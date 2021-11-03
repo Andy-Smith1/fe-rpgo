@@ -8,7 +8,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/vt323": "^0.2.0",
     "expo": "~43.0.0",
+    "expo-font": "~10.0.3",
     "expo-location": "~13.0.4",
     "expo-sensors": "~11.0.3",
     "expo-status-bar": "~1.1.0",
