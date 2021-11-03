@@ -16,7 +16,7 @@ import { Pedometer } from "expo-sensors";
 import { msToTime } from "../utils/formatting";
 import ActivityProgressBar from "./ActivityProgressBar";
 
-const ActiveChallengeMap = ({ activeChallenge }) => {
+const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
   const [metersClimbed, setMetersClimbed] = useState(0);
@@ -133,10 +133,7 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
 
   return (
     <View>
-      <ActivityProgressBar
-        activeChallenge={activeChallenge}
-        progress={progress}
-      />
+      <ActivityProgressBar activeChallenge={route.params} progress={progress} />
       {location && (
         <MapView
           style={styles.map}
@@ -161,12 +158,7 @@ export default ActiveChallengeMap;
 
 const styles = StyleSheet.create({
   map: {
-    flex: 3,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-  },
-  button: {
-    flex: 1,
-    height: 200,
   },
 });

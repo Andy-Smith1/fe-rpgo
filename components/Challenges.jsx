@@ -15,33 +15,16 @@ const Challenges = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* {challenges.map((challenge) => {
-        return (
-          <View key={challenge.id} style={styles.listItem}>
-            <Text style={styles.title}>{challenge.title}</Text>
-            <Text style={styles.description}>{challenge.description}</Text>
-            <Button
-              title="Start Challenge"
-              color="white"
-              onPress={() => {
-                setSelectedChallenge(challenge);
-                navigation.navigate({
-                  name: "ActiveChallengeMap",
-                  params: { selectedChallenge },
-                });
-              }}
-            />
-          </View>
-        );
-      })} */}
-
       <FlatList
         data={challenges}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               style={styles.listItem}
-              onPress={() => console.log("hi")}
+              onPress={() => {
+                setSelectedChallenge(item);
+                navigation.navigate("ActiveChallengeMap", item);
+              }}
             >
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
@@ -85,7 +68,7 @@ const testChallenges = [
     title: "Run From the Dragon",
     description: "You are being chased by a dragon, cover 1000 steps to escape",
     reward: "blueTrophy.png",
-    activity_type: "steps",
+    activity_type: "stepCount",
     timed_challenge: [true, new Date("December 17, 2021 03:24:00")],
     activity_value: 1000,
   },
@@ -95,7 +78,7 @@ const testChallenges = [
     description:
       "You find a deserted guard tower, gain 50 elevation to search it",
     reward: "redTrophy.png",
-    activity_type: "elevation",
+    activity_type: "metersClimbed",
     timed_challenge: [false, null],
     activity_value: 50,
   },
@@ -104,7 +87,7 @@ const testChallenges = [
     title: "One does not simply...",
     description: "Cover 5km to enter a new area",
     reward: "theOneTrophy.png",
-    activity_type: "distance",
+    activity_type: "distanceTravelled",
     timed_challenge: [false, null],
     activity_value: 5000,
   },
@@ -113,7 +96,7 @@ const testChallenges = [
     title: "Help the Grey Mage",
     description: "Explore an area of 2km to find plants for a mage",
     reward: "greyTrophy.png",
-    activity_type: "distance",
+    activity_type: "distanceTravelled",
     timed_challenge: [false, null],
     activity_value: 2000,
   },
@@ -123,7 +106,27 @@ const testChallenges = [
     description:
       "you've been cursed, walk a mile in someone else's shoes to break the curse",
     reward: "purpleMedal.png",
-    activity_type: "distance",
+    activity_type: "distanceTravelled",
+    timed_challenge: [false, null],
+    activity_value: 1000,
+  },
+  {
+    id: 6,
+    title: "Break the curse",
+    description:
+      "you've been cursed, walk a mile in someone else's shoes to break the curse",
+    reward: "purpleMedal.png",
+    activity_type: "distanceTravelled",
+    timed_challenge: [false, null],
+    activity_value: 1000,
+  },
+  {
+    id: 7,
+    title: "Break the curse",
+    description:
+      "you've been cursed, walk a mile in someone else's shoes to break the curse",
+    reward: "purpleMedal.png",
+    activity_type: "distanceTravelled",
     timed_challenge: [false, null],
     activity_value: 1000,
   },
