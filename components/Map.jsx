@@ -1,11 +1,11 @@
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, StyleSheet, Dimensions, StatusBar, Button } from "react-native";
 
-import MapView, { Marker, Polyline } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
 
-const Map = () => {
+const Map = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -22,8 +22,8 @@ const Map = () => {
         setLocation({
           longitude: lastKnownLocation.coords.longitude,
           latitude: lastKnownLocation.coords.latitude,
-          longitudeDelta: 0.0922,
-          latitudeDelta: 0.0421,
+          longitudeDelta: 0.01,
+          latitudeDelta: 0.01,
         });
       } catch (err) {
         console.log(err);
@@ -56,7 +56,8 @@ const Map = () => {
   }, 10000);
 
   return (
-    <View>
+    <View style={styles.container}>
+      <StatusBar hidden={true} />
       {location && (
         <MapView
           style={styles.map}
@@ -67,6 +68,11 @@ const Map = () => {
           <Marker coordinate={location} />
         </MapView>
       )}
+      <Button
+        style={styles.button}
+        title="Challenges"
+        onPress={() => navigation.navigate("Challenges")}
+      />
     </View>
   );
 };
@@ -74,8 +80,16 @@ const Map = () => {
 export default Map;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   map: {
+    flex: 2,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  button: {
+    flex: 1,
+    height: 100,
   },
 });

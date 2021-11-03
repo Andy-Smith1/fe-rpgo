@@ -1,29 +1,48 @@
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Map from "./components/Map";
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Challenges from "./components/Challenges";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [activeChallenge, setActiveChallenge] = useState({
-    active: true,
-    challenge: {
-      title: "Climb the tower.",
-      activity_type: "metersClimbed",
-      activityValue: 20,
-    },
-    data: {},
-  });
+  // const [activeChallenge, setActiveChallenge] = useState({
+  //   active: true,
+  //   challenge: {
+  //     title: "Climb the tower.",
+  //     activity_type: "metersClimbed",
+  //     activityValue: 20,
+  //   },
+  //   data: {},
+  // });
+
   return (
-    <View style={styles.container}>
-      <StatusBar style={styles.statusBar} hidden={true} />
-      {/* <Map /> */}
-      <ActiveChallengeMap
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Map"
+        screenOptions={{ headerShown: false }}
+      >
+        {/* <View style={styles.container}> */}
+        {/* <StatusBar hidden={true} /> */}
+        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen
+          name="ActiveChallengeMap"
+          component={ActiveChallengeMap}
+        />
+        <Stack.Screen name="Challenges" component={Challenges} />
+        {/* <Map /> */}
+        {/* <ActiveChallengeMap
         setActiveChallenge={setActiveChallenge}
         activeChallenge={activeChallenge}
-      />
-    </View>
+        /> */}
+        {/* </View> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -33,8 +52,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  statusBar: {
-    backgroundColor: "red",
   },
 });
