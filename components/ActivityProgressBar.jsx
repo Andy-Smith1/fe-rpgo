@@ -18,7 +18,7 @@ const ActivityProgressBar = ({ activeChallenge, progress }) => {
     <View style={styles.container}>
       <Text style={styles.text}>{activeChallenge.challenge.title}</Text>
       <Text>
-        {progress[activeChallenge.challenge.activity_type]}/
+        {Math.floor(progress[activeChallenge.challenge.activity_type])}/
         {activeChallenge.challenge.activityValue}
       </Text>
     </View>
@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: "#2892D7",
+    alignContent: "center",
+    alignItems: "center",
   },
   text: {
     color: "#fff",

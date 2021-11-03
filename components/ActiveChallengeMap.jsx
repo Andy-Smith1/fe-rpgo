@@ -26,7 +26,11 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
   const [stepCount, setStepCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const [progress, setProgress] = useState({});
+  const [progress, setProgress] = useState({
+    distanceTravelled: 0,
+    metersClimbed: 0,
+    stepCount: 0,
+  });
 
   useEffect(() => {
     Pedometer.requestPermissionsAsync();

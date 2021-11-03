@@ -9,8 +9,8 @@ export default function App() {
   const [activeChallenge, setActiveChallenge] = useState({
     active: true,
     challenge: {
-      title: "Run from the Dragon.",
-      activity_type: "stepCount",
+      title: "Climb the tower.",
+      activity_type: "metersClimbed",
       activityValue: 20,
     },
     data: {},
