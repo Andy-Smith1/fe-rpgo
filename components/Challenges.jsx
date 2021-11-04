@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     margin: 20,
     borderColor: "white",
     borderStyle: "solid",
-
     borderWidth: 3,
     backgroundColor: "#7c98b3",
     shadowColor: "black",
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     paddingBottom: 10,
-    fontWeight: "bold",
+
     fontFamily: "GameFont",
   },
   description: {
