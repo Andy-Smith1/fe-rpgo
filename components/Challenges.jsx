@@ -6,18 +6,26 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { getChallenges } from "../utils/api";
 
 const Challenges = ({ navigation }) => {
   const [challenges, setChallenges] = useState(testChallenges);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const [apiChallenges, setApiChallenges] = useState([]);
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    getChallenges().then((challengesFromApi) => {
+      setApiChallenges(challengesFromApi);
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={challenges}
+        data={apiChallenges}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -32,6 +40,7 @@ const Challenges = ({ navigation }) => {
             </TouchableOpacity>
           );
         }}
+        keyExtractor={(item) => item._id}
       />
     </View>
   );
