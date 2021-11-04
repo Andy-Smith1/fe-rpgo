@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderColor: "white",
     borderStyle: "solid",
-    borderRadius: 10,
+
     borderWidth: 3,
     backgroundColor: "#7c98b3",
     shadowColor: "black",

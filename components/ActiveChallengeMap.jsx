@@ -50,6 +50,18 @@ const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
         return;
       }
 
+      try {
+        let lastKnownLocation = await Location.getLastKnownPositionAsync({});
+        setLocation({
+          longitude: lastKnownLocation.coords.longitude,
+          latitude: lastKnownLocation.coords.latitude,
+          longitudeDelta: 0.01,
+          latitudeDelta: 0.01,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+
       let position = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.BestForNavigation,
       });

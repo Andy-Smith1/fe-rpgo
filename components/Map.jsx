@@ -57,7 +57,6 @@ const Map = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden={true} />
       {location && (
         <MapView
           style={styles.map}

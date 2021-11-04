@@ -18,19 +18,22 @@ export default function App() {
 
   if (!fontsLoaded) return null;
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Map"
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Map" component={Map} />
-        <Stack.Screen
-          name="ActiveChallengeMap"
-          component={ActiveChallengeMap}
-        />
-        <Stack.Screen name="Challenges" component={Challenges} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar hidden={true} />
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Map"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen
+            name="ActiveChallengeMap"
+            component={ActiveChallengeMap}
+          />
+          <Stack.Screen name="Challenges" component={Challenges} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
