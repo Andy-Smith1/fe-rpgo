@@ -1,4 +1,11 @@
-import { View, StyleSheet, Dimensions, StatusBar, Button } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  StatusBar,
+  Button,
+  Image,
+} from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
 import React, { useState, useEffect } from "react";
@@ -64,7 +71,17 @@ const Map = ({ navigation }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          <Marker coordinate={location} />
+          {/* <Marker
+            coordinate={location}
+            image={require("../assets/Art-Assets/Minotaur.gif")}
+            minDelta={0.5}
+            maxDelta={2}
+            style={{ height: 40, width: 40 }}
+          /> */}
+
+          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
+            <Image source={require("../assets/Art-Assets/Minotaur.gif")} />
+          </MapView.Marker>
         </MapView>
       )}
       <Button

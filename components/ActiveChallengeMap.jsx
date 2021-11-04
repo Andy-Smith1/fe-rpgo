@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   Button,
+  Image,
 } from "react-native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
@@ -153,7 +154,10 @@ const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          <Marker coordinate={location} />
+          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
+            <Image source={require("../assets/Art-Assets/Minotaur.gif")} />
+          </MapView.Marker>
+
           <Polyline
             coordinates={polylineArray}
             strokeColor="red"

@@ -78,7 +78,7 @@ const testChallenges = [
     description: "You are being chased by a dragon, cover 1000 steps to escape",
     reward: "blueTrophy.png",
     activity_type: "stepCount",
-    timed_challenge: [true, new Date("December 17, 2021 03:24:00")],
+    timed_challenge: { timeLimit: 600000 },
     activity_value: 10,
   },
   {
@@ -88,7 +88,7 @@ const testChallenges = [
       "You find a deserted guard tower, gain 50 elevation to search it",
     reward: "redTrophy.png",
     activity_type: "metersClimbed",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 50,
   },
   {
@@ -97,7 +97,7 @@ const testChallenges = [
     description: "Cover 5km to enter a new area",
     reward: "theOneTrophy.png",
     activity_type: "distanceTravelled",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 5000,
   },
   {
@@ -106,7 +106,7 @@ const testChallenges = [
     description: "Explore an area of 2km to find plants for a mage",
     reward: "greyTrophy.png",
     activity_type: "distanceTravelled",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 2000,
   },
   {
@@ -116,7 +116,7 @@ const testChallenges = [
       "you've been cursed, walk a mile in someone else's shoes to break the curse",
     reward: "purpleMedal.png",
     activity_type: "distanceTravelled",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 1000,
   },
   {
@@ -126,7 +126,7 @@ const testChallenges = [
       "you've been cursed, walk a mile in someone else's shoes to break the curse",
     reward: "purpleMedal.png",
     activity_type: "distanceTravelled",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 1000,
   },
   {
@@ -136,7 +136,7 @@ const testChallenges = [
       "you've been cursed, walk a mile in someone else's shoes to break the curse",
     reward: "purpleMedal.png",
     activity_type: "distanceTravelled",
-    timed_challenge: [false, null],
+    timed_challenge: null,
     activity_value: 1000,
   },
 ];
