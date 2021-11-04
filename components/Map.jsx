@@ -5,6 +5,8 @@ import {
   StatusBar,
   Button,
   Image,
+  TouchableOpacity,
+  Text,
 } from "react-native";
 
 import MapView, { Marker } from "react-native-maps";
@@ -84,11 +86,17 @@ const Map = ({ navigation }) => {
           </MapView.Marker>
         </MapView>
       )}
-      <Button
-        style={styles.button}
+      {/* <Button
         title="Challenges"
         onPress={() => navigation.navigate("Challenges")}
-      />
+      /> */}
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Challenges")}
+      >
+        <Text style={styles.text}>Challenges</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -105,7 +113,23 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
   button: {
-    flex: 1,
-    height: 100,
+    padding: 10,
+    color: "white",
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#7c98b3",
+    shadowColor: "black",
+    width: "50%",
+    position: "absolute",
+    left: "25%",
+    bottom: 15,
+  },
+  text: {
+    fontFamily: "GameFont",
+    textAlign: "center",
+    color: "white",
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });

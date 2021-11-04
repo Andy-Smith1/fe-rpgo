@@ -14,8 +14,6 @@ const Challenges = ({ navigation }) => {
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const { user } = useContext(UserContext);
 
-  console.log(user);
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -101,7 +99,7 @@ const testChallenges = [
     reward: "theOneTrophy.png",
     activity_type: "distanceTravelled",
     timed_challenge: null,
-    activity_value: 5000,
+    activity_value: 1,
   },
   {
     id: 4,

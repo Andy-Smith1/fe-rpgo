@@ -18,7 +18,7 @@ import { Pedometer } from "expo-sensors";
 import ActivityProgressBar from "./ActivityProgressBar";
 import { UserContext } from "../contexts/UserContext";
 
-const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
+const ActiveChallengeMap = ({ navigation, route }) => {
   const { user } = useContext(UserContext);
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
@@ -148,7 +148,11 @@ const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
 
   return (
     <View>
-      <ActivityProgressBar activeChallenge={route.params} progress={progress} />
+      <ActivityProgressBar
+        activeChallenge={route.params}
+        progress={progress}
+        navigation={navigation}
+      />
       {location && (
         <MapView
           style={styles.map}
