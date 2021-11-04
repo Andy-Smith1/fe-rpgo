@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
-import { useFonts } from "expo-font";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Alert, TouchableOpacity } from "react-native";
 
 const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
   const [challengeComplete, setChallengeComplete] = useState(false);
