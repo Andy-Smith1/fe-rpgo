@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Map from "./components/Map";
+import Login from "./components/Login"
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -22,7 +23,7 @@ export default function App() {
       <StatusBar hidden={true} />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Map"
+          initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Map" component={Map} />
@@ -31,6 +32,7 @@ export default function App() {
             component={ActiveChallengeMap}
           />
           <Stack.Screen name="Challenges" component={Challenges} />
+          <Stack.Screen name="Login" component={Login}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
