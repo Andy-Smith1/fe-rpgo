@@ -6,12 +6,15 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
-import { withSafeAreaInsets } from "react-native-safe-area-context";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Challenges = ({ navigation }) => {
   const [challenges, setChallenges] = useState(testChallenges);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
+  const { user } = useContext(UserContext);
+
+  console.log(user);
 
   return (
     <View style={styles.container}>
