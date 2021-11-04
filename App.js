@@ -8,11 +8,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Challenges from "./components/Challenges";
 import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
 import { UserContext } from "./contexts/UserContext";
+import { LogBox } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState({ name: "Andy" });
+
+  //the below line will remove all warnings on the mobile app, will be handy when testing
+  // LogBox.ignoreAllLogs();
 
   let [fontsLoaded, error] = useFonts({
     GameFont: VT323_400Regular,
