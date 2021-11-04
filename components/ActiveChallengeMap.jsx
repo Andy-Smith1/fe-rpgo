@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   Button,
+  Image,
 } from "react-native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
@@ -16,7 +17,7 @@ import { Pedometer } from "expo-sensors";
 import { msToTime } from "../utils/formatting";
 import ActivityProgressBar from "./ActivityProgressBar";
 
-const ActiveChallengeMap = ({ activeChallenge }) => {
+const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
   const [metersClimbed, setMetersClimbed] = useState(0);
@@ -48,6 +49,18 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
+      }
+
+      try {
+        let lastKnownLocation = await Location.getLastKnownPositionAsync({});
+        setLocation({
+          longitude: lastKnownLocation.coords.longitude,
+          latitude: lastKnownLocation.coords.latitude,
+          longitudeDelta: 0.01,
+          latitudeDelta: 0.01,
+        });
+      } catch (err) {
+        console.log(err);
       }
 
       let position = await Location.getCurrentPositionAsync({
@@ -125,7 +138,7 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
         metersClimbed,
         distanceTravelled,
         stepCount,
-        timeElapsed: msToTime(timeElapsed),
+        timeElapsed,
         polylineArray,
       });
     }, 5000);
@@ -133,10 +146,7 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
 
   return (
     <View>
-      <ActivityProgressBar
-        activeChallenge={activeChallenge}
-        progress={progress}
-      />
+      <ActivityProgressBar activeChallenge={route.params} progress={progress} />
       {location && (
         <MapView
           style={styles.map}
@@ -144,7 +154,10 @@ const ActiveChallengeMap = ({ activeChallenge }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          <Marker coordinate={location} />
+          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
+            <Image source={require("../assets/Art-Assets/Minotaur.gif")} />
+          </MapView.Marker>
+
           <Polyline
             coordinates={polylineArray}
             strokeColor="red"
@@ -161,12 +174,7 @@ export default ActiveChallengeMap;
 
 const styles = StyleSheet.create({
   map: {
-    flex: 3,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-  },
-  button: {
-    flex: 1,
-    height: 200,
   },
 });

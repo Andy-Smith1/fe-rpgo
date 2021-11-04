@@ -1,29 +1,39 @@
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Map from "./components/Map";
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Challenges from "./components/Challenges";
+import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [activeChallenge, setActiveChallenge] = useState({
-    active: true,
-    challenge: {
-      title: "Climb the tower.",
-      activity_type: "metersClimbed",
-      activityValue: 20,
-    },
-    data: {},
+  let [fontsLoaded, error] = useFonts({
+    GameFont: VT323_400Regular,
   });
+
+  if (!fontsLoaded) return null;
   return (
-    <View style={styles.container}>
-      <StatusBar style={styles.statusBar} hidden={true} />
-      {/* <Map /> */}
-      <ActiveChallengeMap
-        setActiveChallenge={setActiveChallenge}
-        activeChallenge={activeChallenge}
-      />
-    </View>
+    <>
+      <StatusBar hidden={true} />
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Map"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen
+            name="ActiveChallengeMap"
+            component={ActiveChallengeMap}
+          />
+          <Stack.Screen name="Challenges" component={Challenges} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
@@ -33,8 +43,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  statusBar: {
-    backgroundColor: "red",
   },
 });
