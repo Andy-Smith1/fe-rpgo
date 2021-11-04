@@ -9,15 +9,17 @@ import {
 } from "react-native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
-import { getDistance, getPreciseDistance } from "geolib";
+import { getPreciseDistance } from "geolib";
 import { Pedometer } from "expo-sensors";
-import { msToTime } from "../utils/formatting";
-import ActivityProgressBar from "./ActivityProgressBar";
 
-const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
+import ActivityProgressBar from "./ActivityProgressBar";
+import { UserContext } from "../contexts/UserContext";
+
+const ActiveChallengeMap = ({ navigation, route }) => {
+  const { user } = useContext(UserContext);
   const [location, setLocation] = useState(null);
   const [polylineArray, setPolylineArray] = useState([]);
   const [metersClimbed, setMetersClimbed] = useState(0);
@@ -146,7 +148,11 @@ const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
 
   return (
     <View>
-      <ActivityProgressBar activeChallenge={route.params} progress={progress} />
+      <ActivityProgressBar
+        activeChallenge={route.params}
+        progress={progress}
+        navigation={navigation}
+      />
       {location && (
         <MapView
           style={styles.map}
