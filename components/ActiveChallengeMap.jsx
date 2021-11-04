@@ -137,7 +137,7 @@ const ActiveChallengeMap = ({ activeChallenge, navigation, route }) => {
         metersClimbed,
         distanceTravelled,
         stepCount,
-        timeElapsed: msToTime(timeElapsed),
+        timeElapsed,
         polylineArray,
       });
     }, 5000);

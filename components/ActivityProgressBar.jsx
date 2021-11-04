@@ -12,6 +12,7 @@ const ActivityProgressBar = ({ activeChallenge, progress }) => {
       </View>
     );
   }
+  console.log(progress);
 
   return (
     <View style={styles.container}>
