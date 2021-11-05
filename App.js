@@ -9,11 +9,12 @@ import Challenges from "./components/Challenges";
 import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
 import { UserContext } from "./contexts/UserContext";
 import { LogBox } from "react-native";
+import UserMenu from "./components/UserMenu";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState({ name: "Andy" });
+  const [user, setUser] = useState(null);
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
   // LogBox.ignoreAllLogs();
@@ -38,6 +39,7 @@ export default function App() {
               component={ActiveChallengeMap}
             />
             <Stack.Screen name="Challenges" component={Challenges} />
+            <Stack.Screen name="UserMenu" component={UserMenu} />
           </Stack.Navigator>
         </NavigationContainer>
       </UserContext.Provider>
