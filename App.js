@@ -14,10 +14,12 @@ import { LogBox } from "react-native";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState({});
+
+  const [user, setUser] = useState(null);
+
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
-  // LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
 
   let [fontsLoaded, error] = useFonts({
     GameFont: VT323_400Regular,
