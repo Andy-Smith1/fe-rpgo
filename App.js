@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { useState } from "react";
 import Map from "./components/Map";
+import Login from "./components/Login"
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,7 +14,7 @@ import { LogBox } from "react-native";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState({ name: "Andy" });
+  const [user, setUser] = useState({});
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
   // LogBox.ignoreAllLogs();
@@ -29,7 +30,7 @@ export default function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Map"
+            initialRouteName="Login"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Map" component={Map} />
@@ -38,6 +39,12 @@ export default function App() {
               component={ActiveChallengeMap}
             />
             <Stack.Screen name="Challenges" component={Challenges} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              user={user}
+              setUser={setUser}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </UserContext.Provider>
