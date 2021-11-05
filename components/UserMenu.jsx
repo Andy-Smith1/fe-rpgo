@@ -31,9 +31,9 @@ const UserMenu = ({ navigation }) => {
         <View style={styles.userInfo}>
           <Text style={styles.smallDescription}>Tap sprite to customise</Text>
           <TouchableOpacity
-          // onPress={() => {
-          //   navigation.navigate("Sprites");
-          // }}
+          onPress={() => {
+            navigation.navigate("Sprites");
+          }}
           >
             <Image source={ASSETS[user.user.sprite]} style={styles.menuSprite} />
           </TouchableOpacity>
@@ -73,6 +73,7 @@ const UserMenu = ({ navigation }) => {
         style={styles.listItem}
         onPress={() => {
           setUser(null);
+          navigation.navigate("Login",)
         }}
       >
         <Text style={styles.title}>Log Out</Text>
