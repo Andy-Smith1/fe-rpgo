@@ -4,11 +4,13 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getChallenges } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
+import ASSETS from "../utils/assets-object";
 
 const Challenges = ({ navigation }) => {
   //   const [challenges, setChallenges] = useState(testChallenges);
@@ -48,6 +50,7 @@ const Challenges = ({ navigation }) => {
             >
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
+              <Image source={ASSETS[item.reward]} />
             </TouchableOpacity>
           );
         }}
