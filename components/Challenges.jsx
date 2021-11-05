@@ -20,12 +20,21 @@ const Challenges = ({ navigation }) => {
   useEffect(() => {
     getChallenges().then((challengesFromApi) => {
       setApiChallenges(challengesFromApi);
-      console.log("refreshed");
     });
   }, [isFocused]);
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Map");
+        }}
+        style={styles.button}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
+      <Text style={styles.questTitle}>Quests </Text>
+
       <FlatList
         data={apiChallenges}
         renderItem={({ item }) => {
@@ -79,6 +88,28 @@ const styles = StyleSheet.create({
     fontFamily: "GameFont",
     fontSize: 18,
     color: "#cee5f2",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  questTitle: {
+    textAlign: "center",
+    fontFamily: "GameFont",
+    color: "white",
+    fontSize: 40,
+    padding: 10,
+  },
+  button: {
+    position: "absolute",
+
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
 });
 
