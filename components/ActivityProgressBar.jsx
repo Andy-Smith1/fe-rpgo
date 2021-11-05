@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, View, Text, Alert, TouchableOpacity } from "react-native";
-import { postActivity } from "../utils/api";
+import { patchActivity, patchUserXP, postActivity } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
 const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
   const [challengeComplete, setChallengeComplete] = useState(false);
   const { user } = useContext(UserContext);
+  const [completedChallengeID, setCompletedChallengeID] = useState(null);
+
   const challengeCompleteAlert = () => {
     Alert.alert(
       "Quest Complete!",
@@ -58,11 +60,14 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
       polylineArray: progress.polylineArray,
     })
       .then((postedActivity) => {
-        console.log(postedActivity);
+        setCompletedChallengeID(postedActivity._id);
       })
       .catch((err) => {
         console.log(err);
       });
+    patchUserXP(user.username, activeChallenge.xp)
+      .then(() => {})
+      .catch((err) => console.log(err));
     setChallengeComplete(true);
     challengeCompleteAlert();
   }
@@ -78,9 +83,19 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
       <TouchableOpacity
         style={styles.stop}
         onPress={() => {
-          challengeComplete
-            ? navigation.navigate("Challenges")
-            : endChallengeAlert();
+          if (challengeComplete) {
+            patchActivity({
+              distanceTravelled: progress.distanceTravelled,
+              metersClimbed: progress.metersClimbed,
+              stepCount: progress.stepCount,
+              timeElapsed: progress.timeElapsed,
+              activityID: completedChallengeID,
+            }).then((response) => {
+              navigation.navigate("Map");
+            });
+          } else {
+            endChallengeAlert();
+          }
         }}
       >
         <Text style={styles.text}>End Challenge</Text>

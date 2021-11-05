@@ -16,7 +16,7 @@ export default function App() {
   const [user, setUser] = useState({ username: "Marvin Martian" });
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
-  // LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
 
   let [fontsLoaded, error] = useFonts({
     GameFont: VT323_400Regular,
