@@ -83,7 +83,7 @@ const Map = ({ navigation }) => {
 
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
             <Image
-              source={require("../assets/Art-Assets/Reaper/Reaper.gif")}
+              source={require("../assets/Art-Assets/Minotaur/Minotaur.gif")}
               style={{ height: 80 }}
             />
           </MapView.Marker>
@@ -98,7 +98,7 @@ const Map = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate("Challenges")}
       >
-        <Text style={styles.text}>Challenges</Text>
+        <Text style={styles.text}>Quests</Text>
       </TouchableOpacity>
     </View>
   );
@@ -133,6 +133,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 24,
-    fontWeight: "bold",
   },
 });

@@ -4,11 +4,13 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { getChallenges } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
+import ASSETS from "../utils/assets-object";
 
 const Challenges = ({ navigation }) => {
   //   const [challenges, setChallenges] = useState(testChallenges);
@@ -20,12 +22,21 @@ const Challenges = ({ navigation }) => {
   useEffect(() => {
     getChallenges().then((challengesFromApi) => {
       setApiChallenges(challengesFromApi);
-      console.log("refreshed");
     });
   }, [isFocused]);
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Map");
+        }}
+        style={styles.button}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
+      <Text style={styles.questTitle}>Quests </Text>
+
       <FlatList
         data={apiChallenges}
         renderItem={({ item }) => {
@@ -39,6 +50,7 @@ const Challenges = ({ navigation }) => {
             >
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
+              <Image source={ASSETS[item.reward]} />
             </TouchableOpacity>
           );
         }}
@@ -79,6 +91,28 @@ const styles = StyleSheet.create({
     fontFamily: "GameFont",
     fontSize: 18,
     color: "#cee5f2",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  questTitle: {
+    textAlign: "center",
+    fontFamily: "GameFont",
+    color: "white",
+    fontSize: 40,
+    padding: 10,
+  },
+  button: {
+    position: "absolute",
+
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
 });
 
