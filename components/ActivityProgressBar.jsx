@@ -35,8 +35,8 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
     ]);
   };
 
-  if (!challengeComplete && activeChallenge.timed_challenge[0].timed) {
-    if (progress.timeElapsed > activeChallenge.timed_challenge[0].time_limit) {
+  if (!challengeComplete && activeChallenge.timed_challenge.timed) {
+    if (progress.timeElapsed > activeChallenge.timed_challenge.time_limit) {
       timesUpAlert();
     }
   }
