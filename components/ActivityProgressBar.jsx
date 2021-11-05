@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, View, Text, Alert, TouchableOpacity } from "react-native";
+import { postActivity } from "../utils/api";
+import { UserContext } from "../contexts/UserContext";
 
 const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
   const [challengeComplete, setChallengeComplete] = useState(false);
-
+  const { user } = useContext(UserContext);
   const challengeCompleteAlert = () => {
     Alert.alert(
       "Quest Complete!",
@@ -45,6 +47,22 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
     progress[activeChallenge.activity_type] >= activeChallenge.activity_value &&
     !challengeComplete
   ) {
+    postActivity({
+      username: user.username,
+      distanceTravelled: progress.distanceTravelled,
+      metersClimbed: progress.metersClimbed,
+      stepCount: progress.stepCount,
+      timeElapsed: progress.timeElapsed,
+      activityType: activeChallenge.activity_type,
+      challengeTitle: activeChallenge.title,
+      polylineArray: progress.polylineArray,
+    })
+      .then((postedActivity) => {
+        console.log(postedActivity);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setChallengeComplete(true);
     challengeCompleteAlert();
   }
