@@ -50,7 +50,7 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
     !challengeComplete
   ) {
     postActivity({
-      username: user.username,
+      username: user.user.username,
       distanceTravelled: progress.distanceTravelled,
       metersClimbed: progress.metersClimbed,
       stepCount: progress.stepCount,
@@ -65,7 +65,7 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-    patchUserXP(user.username, activeChallenge.xp)
+    patchUserXP(user.user.username, activeChallenge.xp)
       .then(() => {})
       .catch((err) => console.log(err));
     setChallengeComplete(true);

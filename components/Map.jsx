@@ -8,15 +8,17 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-
+import ASSETS from "../utils/assets-object";
 import MapView, { Marker } from "react-native-maps";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
+import { UserContext } from "../contexts/UserContext";
 
 const Map = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
@@ -82,10 +84,7 @@ const Map = ({ navigation }) => {
           /> */}
 
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image
-              source={require("../assets/Art-Assets/Minotaur/Minotaur.gif")}
-              style={{ height: 80 }}
-            />
+            <Image source={ASSETS[user.user.sprite]} style={{ height: 80 }} />
           </MapView.Marker>
         </MapView>
       )}
