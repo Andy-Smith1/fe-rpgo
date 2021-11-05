@@ -20,8 +20,8 @@ const Challenges = ({ navigation }) => {
   useEffect(() => {
     getChallenges().then((challengesFromApi) => {
       setApiChallenges(challengesFromApi);
+      console.log("refreshed");
     });
-    console.log("refreshed");
   }, [isFocused]);
 
   return (
