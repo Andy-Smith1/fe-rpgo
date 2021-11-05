@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { getChallenges } from "../utils/api";
+import { getChallenges, getChallengesByUser } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
+import { removeUnderscoresAndHyphens } from "../utils/formatting";
 
 const Challenges = ({ navigation }) => {
   //   const [challenges, setChallenges] = useState(testChallenges);
@@ -20,7 +21,10 @@ const Challenges = ({ navigation }) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getChallenges().then((challengesFromApi) => {
+    // getChallenges().then((challengesFromApi) => {
+    //   setApiChallenges(challengesFromApi);
+    // });
+    getChallengesByUser(user).then((challengesFromApi) => {
       setApiChallenges(challengesFromApi);
     });
   }, [isFocused]);
@@ -50,7 +54,23 @@ const Challenges = ({ navigation }) => {
             >
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
-              <Image source={ASSETS[item.reward]} />
+              <View style={styles.rewardsContainer}>
+                <View style={styles.rewardsChild}>
+                  <Text style={styles.title}>Reward:</Text>
+                  <Image
+                    source={ASSETS[item.reward]}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.description}>
+                    {removeUnderscoresAndHyphens(item.reward)}
+                  </Text>
+                </View>
+                <View style={styles.rewardsChild}>
+                  <Text style={styles.title}>XP:</Text>
+                  <Text style={styles.title}>{item.xp}</Text>
+                </View>
+              </View>
             </TouchableOpacity>
           );
         }}
@@ -113,6 +133,18 @@ const styles = StyleSheet.create({
     fontFamily: "GameFont",
     fontSize: 40,
     padding: 10,
+  },
+  rewardsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 20,
+  },
+  rewardsChild: {
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  image: {
+    height: 50,
   },
 });
 

@@ -56,3 +56,8 @@ export const patchUserXP = async (username, xp) => {
 
   return data;
 };
+
+export const getChallengesByUser = async (username) => {
+  const { data } = await rpgo.get(`/challenges/todo/${username}`);
+  return data.challenges;
+};

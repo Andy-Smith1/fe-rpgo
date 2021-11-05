@@ -1,12 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Text,
-  Platform,
-  Button,
-  Image,
-} from "react-native";
+import { View, StyleSheet, Dimensions, Platform, Image } from "react-native";
 
 import MapView, { Marker, Polyline } from "react-native-maps";
 import React, { useState, useEffect, useContext } from "react";
@@ -14,7 +6,7 @@ import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
 import { getPreciseDistance } from "geolib";
 import { Pedometer } from "expo-sensors";
-
+import ASSETS from "../utils/assets-object";
 import ActivityProgressBar from "./ActivityProgressBar";
 import { UserContext } from "../contexts/UserContext";
 
@@ -161,7 +153,7 @@ const ActiveChallengeMap = ({ navigation, route }) => {
           provider={MapView.PROVIDER_GOOGLE}
         >
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={require("../assets/Art-Assets/Reaper/Reaper.gif")} />
+            <Image source={ASSETS[user.user.sprite]} />
           </MapView.Marker>
 
           <Polyline
