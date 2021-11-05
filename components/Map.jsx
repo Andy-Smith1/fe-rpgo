@@ -93,9 +93,14 @@ const Map = ({ navigation }) => {
         title="Challenges"
         onPress={() => navigation.navigate("Challenges")}
       /> */}
-
       <TouchableOpacity
-        style={styles.button}
+        style={styles.menuButton}
+        onPress={() => navigation.navigate("UserMenu")}
+      >
+        <Text style={styles.text}>Menu</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.questButton}
         onPress={() => navigation.navigate("Challenges")}
       >
         <Text style={styles.text}>Quests</Text>
@@ -115,7 +120,20 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
-  button: {
+  menuButton: {
+    padding: 10,
+    color: "white",
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#7c98b3",
+    shadowColor: "black",
+    width: "50%",
+    position: "absolute",
+    left: "25%",
+    bottom: 80,
+  },
+  questButton: {
     padding: 10,
     color: "white",
     borderColor: "white",
