@@ -14,7 +14,7 @@ import { LogBox } from "react-native";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState({ name: "Andy" });
+  const [user, setUser] = useState({});
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
   // LogBox.ignoreAllLogs();
@@ -27,20 +27,27 @@ export default function App() {
   return (
     <>
       <StatusBar hidden={true} />
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen
-            name="ActiveChallengeMap"
-            component={ActiveChallengeMap}
-          />
-          <Stack.Screen name="Challenges" component={Challenges} />
-          <Stack.Screen name="Login" component={Login}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserContext.Provider value={{ user, setUser }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen
+              name="ActiveChallengeMap"
+              component={ActiveChallengeMap}
+            />
+            <Stack.Screen name="Challenges" component={Challenges} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              user={user}
+              setUser={setUser}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserContext.Provider>
     </>
   );
 }

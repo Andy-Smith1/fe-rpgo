@@ -7,23 +7,55 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext }from "react";
 import { UserContext } from "../contexts/UserContext";
+import axios from 'axios';
+import { NavigationRouteContext } from "@react-navigation/native";
 
 
 
-const Login = () => {
 
-  const { user } = useContext(UserContext);
+const Login = ({navigation}) => {
+  const [newPassword, setNewPassword] = useState('');
+  const [newUsername, setNewUsername] = useState('');
+  const [err, setErr] = useState('');
+  const { user, setUser } = useContext(UserContext);
   
+  
+  const handleLogin = async () => {
+      setErr('')
+    const result = await axios.get(`https://rp-go.herokuapp.com/api/users/${newUsername}`);
+    if (result.data.user.password === newPassword) {
+      setUser(result.data);
+      setNewUsername('');
+      setNewPassword('');
+      navigation.navigate('Map');
+      } else {
+      setErr('Username or password is invalid, please try again')
+      setNewUsername("");
+      setNewPassword("");
+      }
+    }
+
   
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="username" />
+      <TextInput style={styles.input}
+        placeholder="username"
+        onChangeText={setNewUsername}
+        defaultValue={newUsername}
+        />
       <TextInput
         style={styles.input}
         secureTextEntry={true}
         placeholder="password"
+        onChangeText={setNewPassword}
+        defaultValue={newPassword}
       />
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity style={styles.loginButton}
+        onPress={() => {
+          handleLogin(newUsername, newPassword);
+        }
+    
+        }>
         <Text style={styles.title}>Log in!</Text>
       </TouchableOpacity>
     </View>
