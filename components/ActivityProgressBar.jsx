@@ -18,6 +18,17 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
     );
   };
 
+  const endChallengeAlert = () => {
+    Alert.alert(
+      "Are you sure?",
+      "You will lose your progress if you end this quest.",
+      [
+        { text: "Keep going", style: "cancel" },
+        { text: "End", onPress: () => navigation.navigate("Challenges") },
+      ]
+    );
+  };
+
   if (
     progress[activeChallenge.activity_type] >= activeChallenge.activity_value &&
     !challengeComplete
@@ -34,6 +45,16 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
         {Math.floor(progress[activeChallenge.activity_type])}/
         {activeChallenge.activity_value}
       </Text>
+      <TouchableOpacity
+        style={styles.stop}
+        onPress={() => {
+          challengeComplete
+            ? navigation.navigate("Challenges")
+            : endChallengeAlert();
+        }}
+      >
+        <Text style={styles.text}>End Challenge</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -46,6 +67,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#7c98b3",
     alignContent: "center",
     alignItems: "center",
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
   },
   text: {
     color: "white",
@@ -60,5 +84,10 @@ const styles = StyleSheet.create({
 
     fontFamily: "GameFont",
     fontSize: 24,
+  },
+  stop: {
+    backgroundColor: "#536b78",
+    marginTop: 5,
+    padding: 5,
   },
 });

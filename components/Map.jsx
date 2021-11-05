@@ -82,7 +82,10 @@ const Map = ({ navigation }) => {
           /> */}
 
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={require("../assets/Art-Assets/Minotaur.gif")} />
+            <Image
+              source={require("../assets/Art-Assets/Reaper/Reaper.gif")}
+              style={{ height: 80 }}
+            />
           </MapView.Marker>
         </MapView>
       )}
