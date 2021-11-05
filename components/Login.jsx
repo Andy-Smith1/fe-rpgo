@@ -5,14 +5,24 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import React, { useState, useEffect, useContext }from "react";
+import { UserContext } from "../contexts/UserContext";
 
-import React from "react";
+
 
 const Login = () => {
+
+  const { user } = useContext(UserContext);
+  
+  
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="username"/>
-      <TextInput style={styles.input} secureTextEntry={true} placeholder="password" />
+      <TextInput style={styles.input} placeholder="username" />
+      <TextInput
+        style={styles.input}
+        secureTextEntry={true}
+        placeholder="password"
+      />
       <TouchableOpacity style={styles.loginButton}>
         <Text style={styles.title}>Log in!</Text>
       </TouchableOpacity>
