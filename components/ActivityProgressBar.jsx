@@ -13,7 +13,7 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
           text: "Keep Tracking",
           style: "cancel",
         },
-        { text: "Complete", onPress: () => navigation.navigate("Challenges") },
+        { text: "Complete", onPress: () => navigation.navigate("Map") },
       ]
     );
   };
@@ -24,10 +24,22 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
       "You will lose your progress if you end this quest.",
       [
         { text: "Keep going", style: "cancel" },
-        { text: "End", onPress: () => navigation.navigate("Challenges") },
+        { text: "End", onPress: () => navigation.navigate("Map") },
       ]
     );
   };
+
+  const timesUpAlert = () => {
+    Alert.alert("Quest failed!", "You ran out of time!", [
+      { text: "OK", onPress: () => navigation.navigate("Map") },
+    ]);
+  };
+
+  if (!challengeComplete && activeChallenge.timed_challenge[0].timed) {
+    if (progress.timeElapsed > activeChallenge.timed_challenge[0].time_limit) {
+      timesUpAlert();
+    }
+  }
 
   if (
     progress[activeChallenge.activity_type] >= activeChallenge.activity_value &&
