@@ -27,7 +27,6 @@ export default function App() {
   return (
     <>
       <StatusBar hidden={true} />
-<<<<<<< HEAD
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
@@ -42,23 +41,6 @@ export default function App() {
           <Stack.Screen name="Login" component={Login}/>
         </Stack.Navigator>
       </NavigationContainer>
-=======
-      <UserContext.Provider value={{ user, setUser }}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Map"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Map" component={Map} />
-            <Stack.Screen
-              name="ActiveChallengeMap"
-              component={ActiveChallengeMap}
-            />
-            <Stack.Screen name="Challenges" component={Challenges} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </UserContext.Provider>
->>>>>>> main
     </>
   );
 }
