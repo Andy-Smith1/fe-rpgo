@@ -68,15 +68,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#536b78",
+    padding: 20,
   },
   loginButton: {
-    padding: 20,
+    padding: 10,
     color: "white",
     margin: 20,
     fontFamily: "Game Font",
     borderColor: "white",
     borderStyle: "solid",
-
     borderWidth: 3,
     backgroundColor: "#7c98b3",
     shadowColor: "black",
@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     paddingBottom: 10,
-    fontWeight: "bold",
     fontFamily: "GameFont",
   },
   description: {
