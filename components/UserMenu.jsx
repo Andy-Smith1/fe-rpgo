@@ -35,21 +35,21 @@ const UserMenu = ({ navigation }) => {
           //   navigation.navigate("Sprites");
           // }}
           >
-            <Image source={ASSETS[user.sprite]} style={styles.menuSprite} />
+            <Image source={ASSETS[user.user.sprite]} style={styles.menuSprite} />
           </TouchableOpacity>
-          <Text style={styles.title}>{user.username}</Text>
+          <Text style={styles.title}>{user.user.username}</Text>
         </View>
         <View style={styles.userStats}>
           <Text style={styles.level}>
-            Level: {1 + Math.floor(user.xp / 1000)}
+            Level: {1 + Math.floor(user.user.xp / 1000)}
           </Text>
-          <Text style={styles.description}>Current XP: {user.xp}</Text>
-          <Text style={styles.description}>Steps: {user.total_steps}</Text>
+          <Text style={styles.description}>Current XP: {user.user.xp}</Text>
+          <Text style={styles.description}>Steps: {user.user.total_steps}</Text>
           <Text style={styles.description}>
-            Meters Climbed: {user.total_elevation_gain}
+            Meters Climbed: {user.user.total_elevation_gain}
           </Text>
           <Text style={styles.description}>
-            Distance Covered: {user.total_distance_covered}
+            Distance Covered: {user.user.total_distance_covered}
           </Text>
         </View>
       </View>
