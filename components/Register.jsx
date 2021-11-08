@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "white",
     margin: 20,
-    fontFamily: "Game Font",
+    fontFamily: "GameFont",
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
@@ -164,5 +164,6 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowRadius: 10,
     shadowOpacity: 0.5,
+    fontFamily: "GameFont",
   },
 });
