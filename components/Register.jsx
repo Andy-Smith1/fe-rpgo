@@ -4,10 +4,13 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
+  Image,
 } from "react-native";
 import React, { useState} from "react";
 import axios from "axios";
 import ASSETS from "../utils/assets-object";
+import { removeUnderscoresAndHyphens } from "../utils/formatting";
 
 const Register = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState('');
@@ -16,6 +19,15 @@ const Register = ({ navigation }) => {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [sprite, setSprite] = useState('Minotaur');
   const [err, setErr] = useState('');
+  const spritesArray = [
+    "Chocobo",
+    "Knight-1",
+    "Knight-2",
+    "Minotaur",
+    "Reaper",
+    "Strong-Knight",
+    "Witch",
+  ];
 
 
   const handleRegistration = async () => {
@@ -56,13 +68,31 @@ const Register = ({ navigation }) => {
       <Text style={styles.title}>Register</Text>
 
       <Text style={styles.description}>Choose a sprite!</Text>
-      {/* <TouchableOpacity
-      // onPress={() => {
-      //   navigation.navigate("Sprites")
-      // }}
-      >
-        <Image source={ASSETS[Minotaur]} style={styles.menuSprite} />
-      </TouchableOpacity> */}
+      <View>
+        <FlatList
+          data={spritesArray}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                //style={styles.spriteButton}
+                onPress={() => {
+                  setSprite(item);
+                }}
+              >
+                <Image source={ASSETS[item]} style={styles.sprite} />
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item}
+        />
+      </View>
+      {sprite && (
+        <Text style={styles.description}>
+          {removeUnderscoresAndHyphens(sprite)}
+        </Text>
+      )}
 
       <TextInput
         style={styles.input}
@@ -110,7 +140,7 @@ const Register = ({ navigation }) => {
       <Text style={styles.description}>Already registered?</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={()=>{
+        onPress={() => {
           navigation.navigate("Login");
         }}
       >
@@ -165,5 +195,26 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.5,
     fontFamily: "GameFont",
+  },
+  sprite: {
+    maxWidth: 100,
+    maxHeight: 100,
+    alignSelf: "center",
+    // padding:3,
+  },
+  spriteButton: {
+    justifyContent: "space-evenly",
+    width: 103,
+    height: 103,
+    // padding: 20,
+    color: "white",
+    margin: 10,
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#7c98b3",
+    shadowColor: "black",
+    shadowRadius: 10,
+    shadowOpacity: 0.5,
   },
 });
