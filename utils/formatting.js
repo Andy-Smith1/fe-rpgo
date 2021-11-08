@@ -11,5 +11,5 @@ export function msToTime(duration) {
 }
 
 export const removeUnderscoresAndHyphens = (string) => {
-  return string.replaceAll(/[-_]/g, " ");
+  return string.replace(/[-_]/g, " ");
 };

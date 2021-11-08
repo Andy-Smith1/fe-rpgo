@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Platform,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
@@ -21,11 +22,15 @@ const Challenges = ({ navigation }) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    // getChallenges().then((challengesFromApi) => {
-    //   setApiChallenges(challengesFromApi);
-    // });
     getChallengesByUser(user).then((challengesFromApi) => {
-      setApiChallenges(challengesFromApi);
+      if (Platform.OS === "ios") {
+        setApiChallenges(challengesFromApi);
+      } else {
+        const removedStepChallenges = challengesFromApi.filter(
+          (challenge) => challenge.activity_type !== "stepCount"
+        );
+        setApiChallenges(removedStepChallenges);
+      }
     });
   }, [isFocused]);
 
