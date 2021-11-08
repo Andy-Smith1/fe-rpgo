@@ -8,7 +8,7 @@ import {
 import React, { useState, useEffect, useContext }from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from 'axios';
-import { NavigationRouteContext } from "@react-navigation/native";
+
 
 
 
@@ -38,11 +38,13 @@ const Login = ({navigation}) => {
   
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input}
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
         placeholder="username"
         onChangeText={setNewUsername}
         defaultValue={newUsername}
-        />
+      />
       <TextInput
         style={styles.input}
         secureTextEntry={true}
@@ -50,13 +52,20 @@ const Login = ({navigation}) => {
         onChangeText={setNewPassword}
         defaultValue={newPassword}
       />
-      <TouchableOpacity style={styles.loginButton}
+      <TouchableOpacity
+        style={styles.loginButton}
         onPress={() => {
           handleLogin(newUsername, newPassword);
-        }
-    
-        }>
-        <Text style={styles.title}>Log in!</Text>
+        }}
+      >
+        <Text style={styles.description}>Log in!</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.description}>Create a new user...</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={() => {
+        navigation.navigate('Register');
+      }}>
+        <Text style={styles.description}>Register!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,16 +94,19 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 24,
+    fontSize: 32,
     paddingBottom: 10,
     fontFamily: "GameFont",
+    textAlign: "center",
   },
   description: {
     color: "white",
     fontFamily: "GameFont",
     fontSize: 18,
     color: "#cee5f2",
+    textAlign: "center",
   },
+  
   input: {
     height: 40,
     margin: 12,
