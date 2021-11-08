@@ -2,8 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { useState } from "react";
 import Map from "./components/Map";
-import Login from "./components/Login"
+import Login from "./components/Login";
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
+import PreviousActivities from "./components/PreviousActivities";
+import PrevActivityMapped from "./components/PrevActivityMapped";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Challenges from "./components/Challenges";
@@ -15,9 +17,7 @@ import UserMenu from "./components/UserMenu";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   const [user, setUser] = useState(null);
-
 
   //the below line will remove all warnings on the mobile app, will be handy when testing
   LogBox.ignoreAllLogs();
@@ -43,6 +43,14 @@ export default function App() {
             />
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
+            <Stack.Screen
+              name="PreviousActivities"
+              component={PreviousActivities}
+            />
+            <Stack.Screen
+              name="PrevActivityMapped"
+              component={PrevActivityMapped}
+            />
             <Stack.Screen
               name="Login"
               component={Login}
