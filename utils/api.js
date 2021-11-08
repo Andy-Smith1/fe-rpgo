@@ -61,3 +61,11 @@ export const getChallengesByUser = async (username) => {
   const { data } = await rpgo.get(`/challenges/todo/${username}`);
   return data.challenges;
 };
+
+export const addTrophyToUser = async (username, trophy) => {
+  const { data } = await rpgo.patch(`/users/${username}`, {
+    property_to_change: "trophies",
+    trophy_to_add: trophy,
+  });
+  return data;
+};
