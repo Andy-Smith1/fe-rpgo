@@ -67,15 +67,6 @@ const UserMenu = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.listItem}
-        //   onPress={() => {
-        //     navigation.navigate("CompletedChallenges",);
-        //   }}
-      >
-        <Text style={styles.title}>Completed Quests</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.listItem}
         onPress={() => {
           navigation.navigate("PreviousActivities");
         }}

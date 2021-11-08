@@ -26,6 +26,15 @@ const PreviousActivities = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UserMenu");
+        }}
+        style={styles.button}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
+      <Text style={styles.menuTitle}>Activities</Text>
       <FlatList
         data={apiPreviousActivities}
         renderItem={({ item }) => {
@@ -94,5 +103,23 @@ const styles = StyleSheet.create({
     fontFamily: "GameFont",
     fontSize: 18,
     color: "#cee5f2",
+  },
+  menuTitle: {
+    textAlign: "center",
+    fontFamily: "GameFont",
+    color: "white",
+    fontSize: 40,
+    padding: 10,
+  },
+  button: {
+    position: "absolute",
+
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
 });
