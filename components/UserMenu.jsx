@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
@@ -17,7 +18,7 @@ const UserMenu = ({ navigation }) => {
   console.log(user);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Map");
@@ -35,7 +36,10 @@ const UserMenu = ({ navigation }) => {
           //   navigation.navigate("Sprites");
           // }}
           >
-            <Image source={ASSETS[user.user.sprite]} style={styles.menuSprite} />
+            <Image
+              source={ASSETS[user.user.sprite]}
+              style={styles.menuSprite}
+            />
           </TouchableOpacity>
           <Text style={styles.title}>{user.user.username}</Text>
         </View>
@@ -63,11 +67,11 @@ const UserMenu = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.listItem}
-        //   onPress={() => {
-        //     navigation.navigate("CompletedChallenges",);
-        //   }}
+        onPress={() => {
+          navigation.navigate("PreviousActivities");
+        }}
       >
-        <Text style={styles.title}>Completed Quests</Text>
+        <Text style={styles.title}>Previous Activities</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.listItem}
@@ -77,7 +81,7 @@ const UserMenu = ({ navigation }) => {
       >
         <Text style={styles.title}>Log Out</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
