@@ -1,17 +1,43 @@
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
+  Image,
   TouchableOpacity,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
+import ASSETS from "../utils/assets-object";
+
 import { NavigationRouteContext } from "@react-navigation/native";
 
-const Sprites = ({ navigation }) => {
-//use trophies in user context to set sprites to unlocked or locked
+const UserMenuSprites = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
+
+  //use trophies in user context to set sprites to unlocked or locked
+
+  const spritesArray = [
+    "Chocobo",
+    "Knight-1",
+    "Knight-2",
+    "Minotaur",
+    "Reaper",
+    "Strong-Knight",
+    "Witch",
+  ];
+  // console.log(user.user.username);
+  const handleSpritePress = async (sprite) => {
+    console.log(sprite);
+    console.log(user.user.username);
+    const result = await axios.patch(
+      `https://rp-go.herokuapp.com/api/users/${user.user.username}`,
+      { property_to_change: "sprite", new_sprite: sprite }
+    );
+    console.log(result.data);
+  };
 
   return (
     <View style={styles.container}>
@@ -24,6 +50,25 @@ const Sprites = ({ navigation }) => {
         <Text style={styles.back}>&lt;</Text>
       </TouchableOpacity>
       <Text style={styles.spritesTitle}>Sprites </Text>
+      <ScrollView style={styles.spriteList}>
+        <FlatList
+          data={spritesArray}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                style={styles.spriteButton}
+                // style={ item === user.sprite && styles.selectedSprite}
+                onPress={() => {
+                  handleSpritePress(item);
+                }}
+              >
+                <Image source={ASSETS[item]} style={styles.sprite} />
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -33,13 +78,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#536b78",
   },
-  userInfoBox: {
+  spriteList: {
+    // justifyContent: "space-evenly",
+    // backgroundColor: "green",
     flexDirection: "row",
+    flexWrap: "wrap",
+    maxWidth: 500,
+    // flex: 1,
+  },
+  sprite: {
+    maxWidth: 100,
+    maxHeight: 100,
+    alignSelf: "center",
+    // padding:3,
+  },
+  spriteButton: {
     justifyContent: "space-evenly",
-
-    padding: 20,
+    width: 103,
+    height: 103,
+    // padding: 20,
     color: "white",
-    margin: 20,
+    margin: 10,
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
@@ -47,9 +106,6 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowRadius: 10,
     shadowOpacity: 0.5,
-  },
-  menuSprite: {
-    width: 120,
   },
   userStats: {
     marginLeft: 15,
@@ -116,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Sprites;
+export default UserMenuSprites;
