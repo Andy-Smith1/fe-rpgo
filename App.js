@@ -49,20 +49,16 @@ export default function App() {
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
             <Stack.Screen name="UserMenuSprites" component={UserMenuSprites} />
+            <Stack.Screen name="Trophies" component={Trophies} />
             <Stack.Screen
-
               name="PreviousActivities"
               component={PreviousActivities}
             />
             <Stack.Screen
               name="PrevActivityMapped"
               component={PrevActivityMapped}
- />
-
-                <Stack.Screen
-              name="Register" component={Register}
-
             />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen
               name="Login"
               component={Login}
