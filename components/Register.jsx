@@ -106,6 +106,16 @@ const Register = ({ navigation }) => {
       >
         <Text style={styles.description}>Register!</Text>
       </TouchableOpacity>
+
+      <Text style={styles.description}>Already registered?</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={()=>{
+          navigation.navigate("Login");
+        }}
+      >
+        <Text style={styles.description}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -122,7 +132,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "white",
     margin: 20,
-    fontFamily: "Game Font",
+    fontFamily: "GameFont",
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
@@ -154,5 +164,6 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowRadius: 10,
     shadowOpacity: 0.5,
+    fontFamily: "GameFont",
   },
 });
