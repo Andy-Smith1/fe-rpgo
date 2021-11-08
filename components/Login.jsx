@@ -8,7 +8,7 @@ import {
 import React, { useState, useEffect, useContext }from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from 'axios';
-import { NavigationRouteContext } from "@react-navigation/native";
+
 
 
 
@@ -38,11 +38,13 @@ const Login = ({navigation}) => {
   
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input}
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
         placeholder="username"
         onChangeText={setNewUsername}
         defaultValue={newUsername}
-        />
+      />
       <TextInput
         style={styles.input}
         secureTextEntry={true}
@@ -50,13 +52,20 @@ const Login = ({navigation}) => {
         onChangeText={setNewPassword}
         defaultValue={newPassword}
       />
-      <TouchableOpacity style={styles.loginButton}
+      <TouchableOpacity
+        style={styles.loginButton}
         onPress={() => {
           handleLogin(newUsername, newPassword);
-        }
-    
-        }>
-        <Text style={styles.title}>Log in!</Text>
+        }}
+      >
+        <Text style={styles.description}>Log in!</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.description}>Create a new user...</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={() => {
+        navigation.navigate('Register');
+      }}>
+        <Text style={styles.description}>Register!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -68,15 +77,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#536b78",
+    padding: 20,
   },
   loginButton: {
-    padding: 20,
+    padding: 10,
     color: "white",
     margin: 20,
     fontFamily: "Game Font",
     borderColor: "white",
     borderStyle: "solid",
-
     borderWidth: 3,
     backgroundColor: "#7c98b3",
     shadowColor: "black",
@@ -85,22 +94,25 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 24,
+    fontSize: 32,
     paddingBottom: 10,
-    fontWeight: "bold",
     fontFamily: "GameFont",
+    textAlign: "center",
   },
   description: {
     color: "white",
     fontFamily: "GameFont",
     fontSize: 18,
     color: "#cee5f2",
+    textAlign: "center",
   },
+  
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     backgroundColor: "white",
+    fontFamily: "GameFont",
   },
 });

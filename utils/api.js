@@ -56,3 +56,27 @@ export const patchUserXP = async (username, xp) => {
 
   return data;
 };
+
+export const getChallengesByUser = async (username) => {
+  const { data } = await rpgo.get(`/challenges/todo/${username}`);
+  return data.challenges;
+};
+
+export const addTrophyToUser = async (username, trophy) => {
+  const { data } = await rpgo.patch(`/users/${username}`, {
+    property_to_change: "trophies",
+    trophy_to_add: trophy,
+  });
+  return data;
+};
+
+export const getActivitiesByUsername = async (username) => {
+  const { data } = await rpgo.get(`/activities/Shaggy Rogers`);
+  return data.activities;
+};
+
+export const getUser = async (username) => {
+  const { data } = await rpgo.get(`/users/${username}`);
+  return data.user;
+
+};

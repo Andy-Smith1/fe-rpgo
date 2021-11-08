@@ -5,23 +5,31 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Platform,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { getChallenges } from "../utils/api";
+import { getChallenges, getChallengesByUser } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
+import { removeUnderscoresAndHyphens } from "../utils/formatting";
 
 const Challenges = ({ navigation }) => {
-  //   const [challenges, setChallenges] = useState(testChallenges);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [apiChallenges, setApiChallenges] = useState([]);
   const isFocused = useIsFocused();
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getChallenges().then((challengesFromApi) => {
-      setApiChallenges(challengesFromApi);
+    getChallengesByUser(user).then((challengesFromApi) => {
+      if (Platform.OS === "ios") {
+        setApiChallenges(challengesFromApi);
+      } else {
+        const removedStepChallenges = challengesFromApi.filter(
+          (challenge) => challenge.activity_type !== "stepCount"
+        );
+        setApiChallenges(removedStepChallenges);
+      }
     });
   }, [isFocused]);
 
@@ -50,7 +58,23 @@ const Challenges = ({ navigation }) => {
             >
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
-              <Image source={ASSETS[item.reward]} />
+              <View style={styles.rewardsContainer}>
+                <View style={styles.rewardsChild}>
+                  <Text style={styles.title}>Reward:</Text>
+                  <Image
+                    source={ASSETS[item.reward]}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.description}>
+                    {removeUnderscoresAndHyphens(item.reward)}
+                  </Text>
+                </View>
+                <View style={styles.rewardsChild}>
+                  <Text style={styles.title}>XP:</Text>
+                  <Text style={styles.title}>{item.xp}</Text>
+                </View>
+              </View>
             </TouchableOpacity>
           );
         }}
@@ -114,74 +138,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     padding: 10,
   },
+  rewardsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 20,
+  },
+  rewardsChild: {
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  image: {
+    height: 50,
+  },
 });
-
-// const testChallenges = [
-//   {
-//     id: 1,
-//     title: "Run From the Dragon",
-//     description: "You are being chased by a dragon, cover 1000 steps to escape",
-//     reward: "blueTrophy.png",
-//     activity_type: "stepCount",
-//     timed_challenge: { timeLimit: 600000 },
-//     activity_value: 10,
-//   },
-//   {
-//     id: 2,
-//     title: "Climb the Tower",
-//     description:
-//       "You find a deserted guard tower, gain 50 elevation to search it",
-//     reward: "redTrophy.png",
-//     activity_type: "metersClimbed",
-//     timed_challenge: null,
-//     activity_value: 50,
-//   },
-//   {
-//     id: 3,
-//     title: "One does not simply...",
-//     description: "Cover 5km to enter a new area",
-//     reward: "theOneTrophy.png",
-//     activity_type: "distanceTravelled",
-//     timed_challenge: null,
-//     activity_value: 1,
-//   },
-//   {
-//     id: 4,
-//     title: "Help the Grey Mage",
-//     description: "Explore an area of 2km to find plants for a mage",
-//     reward: "greyTrophy.png",
-//     activity_type: "distanceTravelled",
-//     timed_challenge: null,
-//     activity_value: 2000,
-//   },
-//   {
-//     id: 5,
-//     title: "Break the curse",
-//     description:
-//       "you've been cursed, walk a mile in someone else's shoes to break the curse",
-//     reward: "purpleMedal.png",
-//     activity_type: "distanceTravelled",
-//     timed_challenge: null,
-//     activity_value: 1000,
-//   },
-//   {
-//     id: 6,
-//     title: "Break the curse",
-//     description:
-//       "you've been cursed, walk a mile in someone else's shoes to break the curse",
-//     reward: "purpleMedal.png",
-//     activity_type: "distanceTravelled",
-//     timed_challenge: null,
-//     activity_value: 1000,
-//   },
-//   {
-//     id: 7,
-//     title: "Break the curse",
-//     description:
-//       "you've been cursed, walk a mile in someone else's shoes to break the curse",
-//     reward: "purpleMedal.png",
-//     activity_type: "distanceTravelled",
-//     timed_challenge: null,
-//     activity_value: 1000,
-//   },
-// ];

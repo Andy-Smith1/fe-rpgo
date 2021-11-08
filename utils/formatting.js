@@ -9,3 +9,7 @@ export function msToTime(duration) {
 
   return hours + ":" + minutes + ":" + seconds;
 }
+
+export const removeUnderscoresAndHyphens = (string) => {
+  return string.replace(/[-_]/g, " ");
+};
