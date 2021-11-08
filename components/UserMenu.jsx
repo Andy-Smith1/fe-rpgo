@@ -15,8 +15,6 @@ import ASSETS from "../utils/assets-object";
 const UserMenu = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
 
-  console.log(user);
-
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
@@ -32,9 +30,9 @@ const UserMenu = ({ navigation }) => {
         <View style={styles.userInfo}>
           <Text style={styles.smallDescription}>Tap sprite to customise</Text>
           <TouchableOpacity
-          // onPress={() => {
-          //   navigation.navigate("Sprites");
-          // }}
+          onPress={() => {
+            navigation.navigate("UserMenuSprites");
+          }}
           >
             <Image
               source={ASSETS[user.user.sprite]}
@@ -77,6 +75,7 @@ const UserMenu = ({ navigation }) => {
         style={styles.listItem}
         onPress={() => {
           setUser(null);
+          navigation.navigate("Login",)
         }}
       >
         <Text style={styles.title}>Log Out</Text>
@@ -106,7 +105,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   menuSprite: {
-    width: 120,
+    maxWidth: 120,
+    maxHeight:120,
+    alignSelf:"center",
   },
   userStats: {
     marginLeft: 15,
