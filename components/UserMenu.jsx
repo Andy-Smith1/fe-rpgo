@@ -55,9 +55,9 @@ const UserMenu = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.listItem}
-        //   onPress={() => {
-        //     navigation.navigate("Trophies",);
-        //   }}
+          onPress={() => {
+            navigation.navigate("Trophies",);
+          }}
       >
         <Text style={styles.title}>Trophies</Text>
       </TouchableOpacity>

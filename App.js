@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import Map from "./components/Map";
 import Login from "./components/Login"
+import Trophies from "./components/Trophies";
 import Register from "./components/Register"
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import { NavigationContainer } from "@react-navigation/native";
@@ -44,6 +45,7 @@ export default function App() {
             />
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
+            <Stack.Screen name="Trophies" component={Trophies} />
             <Stack.Screen
               name="Register" component={Register}
             />
