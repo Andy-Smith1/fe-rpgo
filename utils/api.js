@@ -70,7 +70,13 @@ export const addTrophyToUser = async (username, trophy) => {
   return data;
 };
 
+export const getActivitiesByUsername = async (username) => {
+  const { data } = await rpgo.get(`/activities/Shaggy Rogers`);
+  return data.activities;
+};
+
 export const getUser = async (username) => {
   const { data } = await rpgo.get(`/users/${username}`);
   return data.user;
+
 };
