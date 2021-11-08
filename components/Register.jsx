@@ -106,6 +106,16 @@ const Register = ({ navigation }) => {
       >
         <Text style={styles.description}>Register!</Text>
       </TouchableOpacity>
+
+      <Text style={styles.description}>Already registered?</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={()=>{
+          navigation.navigate("Login");
+        }}
+      >
+        <Text style={styles.description}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 
