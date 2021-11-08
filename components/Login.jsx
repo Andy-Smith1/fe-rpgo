@@ -113,5 +113,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: "white",
+    fontFamily: "GameFont",
   },
 });
