@@ -1,6 +1,11 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, View, Text, Alert, TouchableOpacity } from "react-native";
-import { patchActivity, patchUserXP, postActivity } from "../utils/api";
+import {
+  addTrophyToUser,
+  patchActivity,
+  patchUserXP,
+  postActivity,
+} from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
 const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
@@ -49,6 +54,7 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
     progress[activeChallenge.activity_type] >= activeChallenge.activity_value &&
     !challengeComplete
   ) {
+    addTrophyToUser(user.user.username, activeChallenge.reward);
     postActivity({
       username: user.user.username,
       distanceTravelled: progress.distanceTravelled,
