@@ -2,7 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { useState } from "react";
 import Map from "./components/Map";
-import Login from "./components/Login";
+
+import Login from "./components/Login"
+import Register from "./components/Register"
+
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import PreviousActivities from "./components/PreviousActivities";
 import PrevActivityMapped from "./components/PrevActivityMapped";
@@ -44,12 +47,18 @@ export default function App() {
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
             <Stack.Screen
+
               name="PreviousActivities"
               component={PreviousActivities}
             />
             <Stack.Screen
               name="PrevActivityMapped"
               component={PrevActivityMapped}
+ />
+
+                <Stack.Screen
+              name="Register" component={Register}
+
             />
             <Stack.Screen
               name="Login"
