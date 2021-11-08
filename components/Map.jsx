@@ -2,8 +2,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  StatusBar,
-  Button,
   Image,
   TouchableOpacity,
   Text,
@@ -14,11 +12,15 @@ import React, { useState, useEffect, useContext } from "react";
 import * as Location from "expo-location";
 import { mapStyle } from "../utils/map-style";
 import { UserContext } from "../contexts/UserContext";
+import { useIsFocused } from "@react-navigation/native";
+import { getUser } from "../utils/api";
 
 const Map = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const { user } = useContext(UserContext);
+  const isFocused = useIsFocused();
+  const [userData, setUserData] = useState(user.user);
 
   useEffect(() => {
     (async () => {
@@ -50,8 +52,10 @@ const Map = ({ navigation }) => {
         longitudeDelta: 0.01,
         latitudeDelta: 0.01,
       });
+
+      getUser(user.user.username).then((response) => setUserData(response));
     })();
-  }, []);
+  }, [isFocused]);
 
   setTimeout(async () => {
     let newPosition = await Location.getCurrentPositionAsync({
@@ -75,23 +79,19 @@ const Map = ({ navigation }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          {/* <Marker
-            coordinate={location}
-            image={require("../assets/Art-Assets/Minotaur.gif")}
-            minDelta={0.5}
-            maxDelta={2}
-            style={{ height: 40, width: 40 }}
-          /> */}
-
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
             <Image source={ASSETS[user.user.sprite]} style={{ height: 80 }} />
           </MapView.Marker>
         </MapView>
       )}
-      {/* <Button
-        title="Challenges"
-        onPress={() => navigation.navigate("Challenges")}
-      /> */}
+      <View style={styles.character}>
+        <Text style={styles.text}>{userData.username}</Text>
+        <Text style={styles.text}>
+          Level: {1 + Math.floor(userData.xp / 1000)}
+        </Text>
+        <Text style={styles.text}>XP: {userData.xp}</Text>
+      </View>
+
       <TouchableOpacity
         style={styles.menuButton}
         onPress={() => navigation.navigate("UserMenu")}
@@ -150,5 +150,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 24,
+  },
+  character: {
+    position: "absolute",
+    width: "50%",
+    top: 15,
+    left: "25%",
+    padding: 10,
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#7c98b3",
+    shadowColor: "black",
   },
 });
