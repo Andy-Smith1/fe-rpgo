@@ -69,3 +69,8 @@ export const addTrophyToUser = async (username, trophy) => {
   });
   return data;
 };
+
+export const getUser = async (username) => {
+  const { data } = await rpgo.get(`/users/${username}`);
+  return data.user;
+};
