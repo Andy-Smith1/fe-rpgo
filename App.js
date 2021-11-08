@@ -4,6 +4,7 @@ import { useState } from "react";
 import Map from "./components/Map";
 
 import Login from "./components/Login"
+import Trophies from "./components/Trophies";
 import Register from "./components/Register"
 
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
@@ -16,6 +17,7 @@ import { useFonts, VT323_400Regular } from "@expo-google-fonts/vt323";
 import { UserContext } from "./contexts/UserContext";
 import { LogBox } from "react-native";
 import UserMenu from "./components/UserMenu";
+import UserMenuSprites from "./components/UserMenuSprites";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,20 +48,17 @@ export default function App() {
             />
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
+            <Stack.Screen name="UserMenuSprites" component={UserMenuSprites} />
+            <Stack.Screen name="Trophies" component={Trophies} />
             <Stack.Screen
-
               name="PreviousActivities"
               component={PreviousActivities}
             />
             <Stack.Screen
               name="PrevActivityMapped"
               component={PrevActivityMapped}
- />
-
-                <Stack.Screen
-              name="Register" component={Register}
-
             />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen
               name="Login"
               component={Login}
