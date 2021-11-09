@@ -93,7 +93,7 @@ const UserMenu = ({ navigation }) => {
         style={styles.listItem}
         onPress={() => {
           setUser(null);
-          navigation.navigate("Login");
+          navigation.navigate("LandingPage");
         }}
       >
         <Text style={styles.title}>Log Out</Text>
