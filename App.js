@@ -3,9 +3,9 @@ import * as React from "react";
 import { useState } from "react";
 import Map from "./components/Map";
 
-import Login from "./components/Login"
+import Login from "./components/Login";
 import Trophies from "./components/Trophies";
-import Register from "./components/Register"
+import Register from "./components/Register";
 
 import ActiveChallengeMap from "./components/ActiveChallengeMap";
 import PreviousActivities from "./components/PreviousActivities";
@@ -18,6 +18,7 @@ import { UserContext } from "./contexts/UserContext";
 import { LogBox } from "react-native";
 import UserMenu from "./components/UserMenu";
 import UserMenuSprites from "./components/UserMenuSprites";
+import FellowAdventurers from "./components/FellowAdventurers";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +65,10 @@ export default function App() {
               component={Login}
               user={user}
               setUser={setUser}
+            />
+            <Stack.Screen
+              name="FellowAdventurers"
+              component={FellowAdventurers}
             />
           </Stack.Navigator>
         </NavigationContainer>

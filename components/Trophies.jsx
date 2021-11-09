@@ -32,6 +32,14 @@ const Trophies = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UserMenu");
+        }}
+        style={styles.backButton}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>Trophies</Text>
       <FlatList
         data={userTrophies}
@@ -54,14 +62,6 @@ const Trophies = ({ navigation }) => {
         }}
         keyExtractor={(item) => item}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate("Map");
-        }}
-      >
-        <Text style={styles.description}>Menu...</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -122,5 +122,16 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowRadius: 10,
     shadowOpacity: 0.5,
+  },
+  backButton: {
+    position: "absolute",
+
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
 });

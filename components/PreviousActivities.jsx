@@ -12,7 +12,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { msToTime } from "../utils/formatting";
 import LoadingAnimation from "./LoadingAnimation";
 
-const PreviousActivities = ({ navigation }) => {
+const PreviousActivities = ({ navigation, route }) => {
   const [apiPreviousActivities, setApiPreviousActivities] = useState([]);
   const isFocused = useIsFocused();
   const { user } = useContext(UserContext);
@@ -20,12 +20,20 @@ const PreviousActivities = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    getActivitiesByUsername(user.username).then((prevChallengesFromApi) => {
-      setIsLoading(false);
-      setApiPreviousActivities(prevChallengesFromApi);
-      console.log(user.username);
-      console.log("refreshed");
-    });
+
+    !route.params
+      ? getActivitiesByUsername(user.user.username).then(
+          (prevChallengesFromApi) => {
+            setIsLoading(false);
+            setApiPreviousActivities(prevChallengesFromApi);
+          }
+        )
+      : getActivitiesByUsername(route.params.username).then(
+          (prevChallengesFromApi) => {
+            setIsLoading(false);
+            setApiPreviousActivities(prevChallengesFromApi);
+          }
+        );
   }, []);
 
   if (isLoading) return <LoadingAnimation />;
@@ -34,7 +42,7 @@ const PreviousActivities = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("UserMenu");
+          navigation.goBack();
         }}
         style={styles.button}
       >
