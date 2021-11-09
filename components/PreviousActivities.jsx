@@ -20,12 +20,12 @@ const PreviousActivities = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    getActivitiesByUsername(user.username).then((prevChallengesFromApi) => {
-      setIsLoading(false);
-      setApiPreviousActivities(prevChallengesFromApi);
-      console.log(user.username);
-      console.log("refreshed");
-    });
+    getActivitiesByUsername(user.user.username).then(
+      (prevChallengesFromApi) => {
+        setIsLoading(false);
+        setApiPreviousActivities(prevChallengesFromApi);
+      }
+    );
   }, []);
 
   if (isLoading) return <LoadingAnimation />;
