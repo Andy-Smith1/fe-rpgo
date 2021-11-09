@@ -19,6 +19,7 @@ import { LogBox } from "react-native";
 import UserMenu from "./components/UserMenu";
 import UserMenuSprites from "./components/UserMenuSprites";
 import LandingPage from "./components/LandingPage";
+import FellowAdventurers from "./components/FellowAdventurers";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,10 @@ export default function App() {
               component={Login}
               user={user}
               setUser={setUser}
+            />
+            <Stack.Screen
+              name="FellowAdventurers"
+              component={FellowAdventurers}
             />
           </Stack.Navigator>
         </NavigationContainer>
