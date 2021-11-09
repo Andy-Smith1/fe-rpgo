@@ -1,54 +1,69 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
   FlatList,
-    Image,
-    TouchableOpacity,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import ASSETS from "../utils/assets-object";
-import { UserContext } from '../contexts/UserContext';
-import { removeUnderscoresAndHyphens } from '../utils/formatting';
+import { UserContext } from "../contexts/UserContext";
+import { removeUnderscoresAndHyphens } from "../utils/formatting";
+import { getUser } from "../utils/api";
+import LoadingAnimation from "./LoadingAnimation";
 
 const Trophies = ({ navigation }) => {
-    const { user } = useContext(UserContext)
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Trophies</Text>
-        <FlatList
-          data={user.user.trophies}
-          style={styles.trophyList}
-          numColumns={2}
-          horizontal={false}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.listItem}>
-                <Image
-                  source={ASSETS[item]}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-                <Text style={styles.description}>
-                  {removeUnderscoresAndHyphens(item)}
-                </Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item) => item}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("Map");
-          }}
-        >
-          <Text style={styles.description}>Menu...</Text>
-        </TouchableOpacity>
-      </View>
-    );
+  const { user } = useContext(UserContext);
+  const [userTrophies, setUserTrophies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUser(user.user.username).then((response) => {
+      setUserTrophies(response.trophies);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) return <LoadingAnimation />;
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UserMenu");
+        }}
+        style={styles.backButton}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>Trophies</Text>
+      <FlatList
+        data={userTrophies}
+        style={styles.trophyList}
+        numColumns={2}
+        horizontal={false}
+        renderItem={({ item }) => {
+          return (
+            <View style={styles.listItem}>
+              <Image
+                source={ASSETS[item]}
+                style={styles.image}
+                resizeMode="contain"
+              />
+              <Text style={styles.description}>
+                {removeUnderscoresAndHyphens(item)}
+              </Text>
+            </View>
+          );
+        }}
+        keyExtractor={(item) => item}
+      />
+    </View>
+  );
 };
 
 export default Trophies;
@@ -81,7 +96,7 @@ const styles = StyleSheet.create({
   listItem: {
     padding: 20,
     color: "white",
-    margin: 10,
+    margin: 20,
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
@@ -107,5 +122,16 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowRadius: 10,
     shadowOpacity: 0.5,
+  },
+  backButton: {
+    position: "absolute",
+
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
 });

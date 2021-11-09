@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
   },
   spriteList: {
     alignSelf: "center",
+    padding:20
+
   },
   sprite: {
     maxWidth: 150,

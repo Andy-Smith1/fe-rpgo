@@ -13,15 +13,19 @@ import { getChallenges, getChallengesByUser } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
 import { removeUnderscoresAndHyphens } from "../utils/formatting";
+import LoadingAnimation from "./LoadingAnimation";
 
 const Challenges = ({ navigation }) => {
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [apiChallenges, setApiChallenges] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const isFocused = useIsFocused();
   const { user } = useContext(UserContext);
 
   useEffect(() => {
+    setIsLoading(true);
     getChallengesByUser(user).then((challengesFromApi) => {
+      setIsLoading(false);
       if (Platform.OS === "ios") {
         setApiChallenges(challengesFromApi);
       } else {
@@ -32,6 +36,8 @@ const Challenges = ({ navigation }) => {
       }
     });
   }, [isFocused]);
+
+  if (isLoading) return <LoadingAnimation />;
 
   return (
     <View style={styles.container}>

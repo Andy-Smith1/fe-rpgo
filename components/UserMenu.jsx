@@ -19,7 +19,7 @@ const UserMenu = ({ navigation }) => {
   const [userData, setUserData] = useState(user.user);
 
   useEffect(() => {
-      getUser(user.user.username).then((response) => setUserData(response));
+    getUser(user.user.username).then((response) => setUserData(response));
   }, [isFocused]);
 
   return (
@@ -41,10 +41,7 @@ const UserMenu = ({ navigation }) => {
               navigation.navigate("UserMenuSprites");
             }}
           >
-            <Image
-              source={ASSETS[userData.sprite]}
-              style={styles.menuSprite}
-            />
+            <Image source={ASSETS[userData.sprite]} style={styles.menuSprite} />
           </TouchableOpacity>
           <Text style={styles.title}>{userData.username}</Text>
         </View>
@@ -53,7 +50,11 @@ const UserMenu = ({ navigation }) => {
             Level: {1 + Math.floor(userData.xp / 1000)}
           </Text>
           <Text style={styles.description}>Current XP: {userData.xp}</Text>
-          <Text style={styles.description}>Steps: {userData.total_steps}</Text>
+          {Platform.OS === "ios" && (
+            <Text style={styles.description}>
+              Steps: {userData.total_steps}
+            </Text>
+          )}
           <Text style={styles.description}>
             Meters Climbed: {userData.total_elevation_gain}
           </Text>
@@ -64,9 +65,9 @@ const UserMenu = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.listItem}
-          onPress={() => {
-            navigation.navigate("Trophies",);
-          }}
+        onPress={() => {
+          navigation.navigate("Trophies");
+        }}
       >
         <Text style={styles.title}>Trophies</Text>
       </TouchableOpacity>
@@ -78,6 +79,16 @@ const UserMenu = ({ navigation }) => {
       >
         <Text style={styles.title}>Previous Activities</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.listItem}
+        onPress={() => {
+          navigation.navigate("FellowAdventurers");
+        }}
+      >
+        <Text style={styles.title}>Fellow Adventurers</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.listItem}
         onPress={() => {
