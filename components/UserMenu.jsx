@@ -53,7 +53,7 @@ const UserMenu = ({ navigation }) => {
             Level: {1 + Math.floor(userData.xp / 1000)}
           </Text>
           <Text style={styles.description}>Current XP: {userData.xp}</Text>
-          <Text style={styles.description}>Steps: {userData.total_steps}</Text>
+          {Platform.OS === "ios" && <Text style={styles.description}>Steps: {userData.total_steps}</Text>}
           <Text style={styles.description}>
             Meters Climbed: {userData.total_elevation_gain}
           </Text>
