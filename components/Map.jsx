@@ -80,7 +80,7 @@ const Map = ({ navigation }) => {
           provider={MapView.PROVIDER_GOOGLE}
         >
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={ASSETS[user.user.sprite]} style={{ height: 80 }} />
+            <Image source={ASSETS[userData.sprite]} style={{ height: 80 }} />
           </MapView.Marker>
         </MapView>
       )}

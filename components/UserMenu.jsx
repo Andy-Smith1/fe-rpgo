@@ -11,9 +11,16 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
+import { getUser } from "../utils/api";
 
 const UserMenu = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
+  const isFocused = useIsFocused();
+  const [userData, setUserData] = useState(user.user);
+
+  useEffect(() => {
+      getUser(user.user.username).then((response) => setUserData(response));
+  }, [isFocused]);
 
   return (
     <ScrollView style={styles.container}>
@@ -30,28 +37,28 @@ const UserMenu = ({ navigation }) => {
         <View style={styles.userInfo}>
           <Text style={styles.smallDescription}>Tap sprite to customise</Text>
           <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("UserMenuSprites");
-          }}
+            onPress={() => {
+              navigation.navigate("UserMenuSprites");
+            }}
           >
             <Image
-              source={ASSETS[user.user.sprite]}
+              source={ASSETS[userData.sprite]}
               style={styles.menuSprite}
             />
           </TouchableOpacity>
-          <Text style={styles.title}>{user.user.username}</Text>
+          <Text style={styles.title}>{userData.username}</Text>
         </View>
         <View style={styles.userStats}>
           <Text style={styles.level}>
-            Level: {1 + Math.floor(user.user.xp / 1000)}
+            Level: {1 + Math.floor(userData.xp / 1000)}
           </Text>
-          <Text style={styles.description}>Current XP: {user.user.xp}</Text>
-          <Text style={styles.description}>Steps: {user.user.total_steps}</Text>
+          <Text style={styles.description}>Current XP: {userData.xp}</Text>
+          <Text style={styles.description}>Steps: {userData.total_steps}</Text>
           <Text style={styles.description}>
-            Meters Climbed: {user.user.total_elevation_gain}
+            Meters Climbed: {userData.total_elevation_gain}
           </Text>
           <Text style={styles.description}>
-            Distance Covered: {user.user.total_distance_covered}
+            Distance Covered: {userData.total_distance_covered}
           </Text>
         </View>
       </View>
@@ -75,7 +82,7 @@ const UserMenu = ({ navigation }) => {
         style={styles.listItem}
         onPress={() => {
           setUser(null);
-          navigation.navigate("Login",)
+          navigation.navigate("Login");
         }}
       >
         <Text style={styles.title}>Log Out</Text>
@@ -106,8 +113,8 @@ const styles = StyleSheet.create({
   },
   menuSprite: {
     maxWidth: 120,
-    maxHeight:120,
-    alignSelf:"center",
+    maxHeight: 120,
+    alignSelf: "center",
   },
   userStats: {
     marginLeft: 15,

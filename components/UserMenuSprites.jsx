@@ -5,17 +5,22 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  ScrollView,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
 
 import { NavigationRouteContext } from "@react-navigation/native";
+import { getUser } from "../utils/api";
+import { isLoading } from "expo-font";
 
 const UserMenuSprites = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
+  const [currSprite, setCurrSprite] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   //use trophies in user context to set sprites to unlocked or locked
 
@@ -28,47 +33,60 @@ const UserMenuSprites = ({ navigation }) => {
     "Strong-Knight",
     "Witch",
   ];
-  // console.log(user.user.username);
+
+  useEffect(() => {
+    setIsLoading;
+    getUser(user.user.username).then((response) => {
+      setCurrSprite(response.sprite);
+    });
+  }, [isFocused]);
+
   const handleSpritePress = async (sprite) => {
-    console.log(sprite);
-    console.log(user.user.username);
     const result = await axios.patch(
       `https://rp-go.herokuapp.com/api/users/${user.user.username}`,
-      { property_to_change: "sprite", new_sprite: sprite }
+      {
+        property_to_change: "sprite",
+        new_sprite: sprite,
+      }
     );
-    console.log(result.data);
+    setCurrSprite(result.data.user.sprite);
+    navigation.navigate("UserMenu");
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Map");
+          navigation.navigate("UserMenu");
         }}
         style={styles.button}
       >
         <Text style={styles.back}>&lt;</Text>
       </TouchableOpacity>
       <Text style={styles.spritesTitle}>Sprites </Text>
-      <ScrollView style={styles.spriteList}>
-        <FlatList
-          data={spritesArray}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                style={styles.spriteButton}
-                // style={ item === user.sprite && styles.selectedSprite}
-                onPress={() => {
-                  handleSpritePress(item);
-                }}
-              >
-                <Image source={ASSETS[item]} style={styles.sprite} />
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={(item) => item}
-        />
-      </ScrollView>
+      <FlatList
+        horizontal={false}
+        numColumns={2}
+        style={styles.spriteList}
+        data={spritesArray}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              style={
+                item === currSprite
+                  ? styles.currUserSprite
+                  : styles.spriteButton
+              }
+              onPress={() => {
+                handleSpritePress(item);
+              }}
+            >
+              <Image source={ASSETS[item]} style={styles.sprite} />
+            </TouchableOpacity>
+          );
+        }}
+        keyExtractor={(item) => item}
+      />
     </View>
   );
 };
@@ -79,32 +97,41 @@ const styles = StyleSheet.create({
     backgroundColor: "#536b78",
   },
   spriteList: {
-    // justifyContent: "space-evenly",
-    // backgroundColor: "green",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    maxWidth: 500,
-    // flex: 1,
+    alignSelf: "center",
   },
   sprite: {
-    maxWidth: 100,
-    maxHeight: 100,
+    maxWidth: 150,
+    minHeight: 110,
+    minWidth: 80,
+    maxHeight: 150,
     alignSelf: "center",
-    // padding:3,
   },
   spriteButton: {
     justifyContent: "space-evenly",
-    width: 103,
-    height: 103,
-    // padding: 20,
+    width: 153,
+    height: 153,
     color: "white",
-    margin: 10,
+    margin: 15,
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
     backgroundColor: "#7c98b3",
     shadowColor: "black",
     shadowRadius: 10,
+    shadowOpacity: 0.5,
+  },
+  currUserSprite: {
+    justifyContent: "space-evenly",
+    width: 153,
+    height: 153,
+    color: "white",
+    margin: 15,
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#FFE95F",
+    shadowColor: "yellow",
+    shadowRadius: 20,
     shadowOpacity: 0.5,
   },
   userStats: {
