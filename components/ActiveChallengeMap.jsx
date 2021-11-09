@@ -160,8 +160,8 @@ const ActiveChallengeMap = ({ navigation, route }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={ASSETS[userData.sprite]} />
+          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2} style={styles.mapMarkerContainer}>
+            <Image source={ASSETS[userData.sprite]} style={styles.mapMarker}/>
           </MapView.Marker>
 
           <Polyline
@@ -182,5 +182,13 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  mapMarkerContainer: {
+    height: 80,
+    width: 160,
+    alignContent: "center",
+  },
+  mapMarker: {
+    alignSelf: "center",
   },
 });
