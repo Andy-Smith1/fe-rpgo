@@ -12,7 +12,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { msToTime } from "../utils/formatting";
 import LoadingAnimation from "./LoadingAnimation";
 
-const PreviousActivities = ({ navigation }) => {
+const PreviousActivities = ({ navigation, route }) => {
   const [apiPreviousActivities, setApiPreviousActivities] = useState([]);
   const isFocused = useIsFocused();
   const { user } = useContext(UserContext);
