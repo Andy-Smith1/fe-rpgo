@@ -9,6 +9,8 @@ import { Pedometer } from "expo-sensors";
 import ASSETS from "../utils/assets-object";
 import ActivityProgressBar from "./ActivityProgressBar";
 import { UserContext } from "../contexts/UserContext";
+import { useIsFocused } from "@react-navigation/native";
+import { getUser } from "../utils/api";
 
 const ActiveChallengeMap = ({ navigation, route }) => {
   const { user } = useContext(UserContext);
@@ -26,6 +28,12 @@ const ActiveChallengeMap = ({ navigation, route }) => {
     metersClimbed: 0,
     stepCount: 0,
   });
+  const isFocused = useIsFocused();
+  const [userData, setUserData] = useState(user.user);
+
+  useEffect(() => {
+      getUser(user.user.username).then((response) => setUserData(response));
+  }, [isFocused]);
 
   useEffect(() => {
     Pedometer.requestPermissionsAsync();
@@ -153,7 +161,7 @@ const ActiveChallengeMap = ({ navigation, route }) => {
           provider={MapView.PROVIDER_GOOGLE}
         >
           <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={ASSETS[user.user.sprite]} />
+            <Image source={ASSETS[userData.sprite]} />
           </MapView.Marker>
 
           <Polyline
