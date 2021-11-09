@@ -17,11 +17,12 @@ const PreviousActivities = ({ navigation }) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getActivitiesByUsername(user.username).then((prevChallengesFromApi) => {
-      setApiPreviousActivities(prevChallengesFromApi);
-      console.log(user.username);
-      console.log("refreshed");
-    });
+    getActivitiesByUsername(user.user.username).then(
+      (prevChallengesFromApi) => {
+        setApiPreviousActivities(prevChallengesFromApi);
+        console.log("refreshed");
+      }
+    );
   }, []);
 
   return (
