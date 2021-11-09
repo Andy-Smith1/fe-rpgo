@@ -7,18 +7,18 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ASSETS from "../utils/assets-object";
 import { removeUnderscoresAndHyphens } from "../utils/formatting";
 
 const Register = ({ navigation }) => {
-  const [newUsername, setNewUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [newBio, setNewBio] = useState('')
-  const [confirmedPassword, setConfirmedPassword] = useState('');
-  const [sprite, setSprite] = useState('Minotaur');
-  const [err, setErr] = useState('');
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [sprite, setSprite] = useState("Minotaur");
+  const [err, setErr] = useState("");
   const spritesArray = [
     "Chocobo",
     "Knight-1",
@@ -29,40 +29,38 @@ const Register = ({ navigation }) => {
     "Witch",
   ];
 
-
   const handleRegistration = async () => {
-    setErr('');
+    setErr("");
     if (newPassword === confirmedPassword) {
-      const result = await axios.post('https://rp-go.herokuapp.com/api/users/', {
-        username: newUsername,
-        password: newPassword,
-        sprite: sprite,
-        xp: 0,
-        trophies: [],
-        bio: newBio,
-        total_distance_covered: 0,
-        total_steps: 0,
-        total_elevation_gain: 0,
-        current_challenge: {name: "no challenge selected"},
-      })
+      const result = await axios.post(
+        "https://rp-go.herokuapp.com/api/users/",
+        {
+          username: newUsername,
+          password: newPassword,
+          sprite: sprite,
+          xp: 0,
+          trophies: [],
+          bio: newBio,
+          total_distance_covered: 0,
+          total_steps: 0,
+          total_elevation_gain: 0,
+          current_challenge: { name: "no challenge selected" },
+        }
+      );
       console.log(result.data);
-      setNewUsername('');
-      setNewPassword('');
-      setConfirmedPassword('');
-      setNewBio('')
-      navigation.navigate('Login');
-    } else {
-      setErr('Something went wrong')
       setNewUsername("");
       setNewPassword("");
       setConfirmedPassword("");
-      setNewBio("");
+
+      navigation.navigate("Login");
+    } else {
+      setErr("Something went wrong");
+      setNewUsername("");
+      setNewPassword("");
+      setConfirmedPassword("");
     }
-  }
-    
-  
-  
-  
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
@@ -114,14 +112,6 @@ const Register = ({ navigation }) => {
         onChangeText={setConfirmedPassword}
         defaultValue={confirmedPassword}
       />
-      <TextInput
-        style={styles.input}
-        multiline={true}
-        placeholder="Write a bio..."
-        numberOfLines={4}
-        onChangeText={setNewBio}
-        defaultValue={newBio}
-      />
 
       <TouchableOpacity
         style={styles.button}
@@ -148,15 +138,15 @@ const Register = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   );
-
-}
-  export default Register;
+};
+export default Register;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#536b78",
     padding: 20,
+    justifyContent: "center",
   },
   button: {
     padding: 10,
@@ -195,6 +185,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.5,
     fontFamily: "GameFont",
+    fontSize: 20,
   },
   sprite: {
     maxWidth: 100,

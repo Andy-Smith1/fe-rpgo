@@ -20,6 +20,7 @@ const ASSETS = {
   Reaper: require("../assets/Art-Assets/Reaper/Reaper.gif"),
   "Strong-Knight": require("../assets/Art-Assets/Strong-Knight/Strong-Knight.gif"),
   Witch: require("../assets/Art-Assets/Witch/Witch.gif"),
+  Loading: require("../assets/Art-Assets/Minotaur/Minotaur(Loading).gif"),
 };
 
 export default ASSETS;
