@@ -1,54 +1,63 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
   FlatList,
-    Image,
-    TouchableOpacity,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import ASSETS from "../utils/assets-object";
-import { UserContext } from '../contexts/UserContext';
-import { removeUnderscoresAndHyphens } from '../utils/formatting';
+import { UserContext } from "../contexts/UserContext";
+import { removeUnderscoresAndHyphens } from "../utils/formatting";
+import { getUser } from "../utils/api";
 
 const Trophies = ({ navigation }) => {
-    const { user } = useContext(UserContext)
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Trophies</Text>
-        <FlatList
-          data={user.user.trophies}
-          style={styles.trophyList}
-          numColumns={2}
-          horizontal={false}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.listItem}>
-                <Image
-                  source={ASSETS[item]}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-                <Text style={styles.description}>
-                  {removeUnderscoresAndHyphens(item)}
-                </Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item) => item}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("Map");
-          }}
-        >
-          <Text style={styles.description}>Menu...</Text>
-        </TouchableOpacity>
-      </View>
-    );
+  const { user } = useContext(UserContext);
+  const [userTrophies, setUserTrophies] = useState([]);
+
+  useEffect(() => {
+    getUser(user.user.username).then((response) => {
+      setUserTrophies(response.trophies);
+    });
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Trophies</Text>
+      <FlatList
+        data={userTrophies}
+        style={styles.trophyList}
+        numColumns={2}
+        horizontal={false}
+        renderItem={({ item }) => {
+          return (
+            <View style={styles.listItem}>
+              <Image
+                source={ASSETS[item]}
+                style={styles.image}
+                resizeMode="contain"
+              />
+              <Text style={styles.description}>
+                {removeUnderscoresAndHyphens(item)}
+              </Text>
+            </View>
+          );
+        }}
+        keyExtractor={(item) => item}
+      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate("Map");
+        }}
+      >
+        <Text style={styles.description}>Menu...</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default Trophies;
@@ -81,7 +90,7 @@ const styles = StyleSheet.create({
   listItem: {
     padding: 20,
     color: "white",
-    margin: 10,
+    margin: 20,
     borderColor: "white",
     borderStyle: "solid",
     borderWidth: 3,
