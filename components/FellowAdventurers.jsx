@@ -35,13 +35,20 @@ const FellowAdventurers = ({ navigation }) => {
         data={usersList}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity style={styles.listItem}>
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() => {
+                navigation.navigate("PreviousActivities", {
+                  username: item.username,
+                });
+              }}
+            >
               <View>
-                <Text style={styles.title}>{item.username}</Text>
                 <Image
                   source={ASSETS[item.sprite]}
                   style={{ alignSelf: "center" }}
                 />
+                <Text style={styles.title}>{item.username}</Text>
               </View>
               <View>
                 <Text
@@ -49,6 +56,7 @@ const FellowAdventurers = ({ navigation }) => {
                     fontFamily: "GameFont",
                     color: "white",
                     fontSize: 20,
+                    paddingBottom: 10,
                   }}
                 >
                   Level: {1 + Math.floor(item.xp / 1000)}

@@ -20,12 +20,20 @@ const PreviousActivities = ({ navigation, route }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    getActivitiesByUsername(user.user.username).then(
-      (prevChallengesFromApi) => {
-        setIsLoading(false);
-        setApiPreviousActivities(prevChallengesFromApi);
-      }
-    );
+
+    !route.params
+      ? getActivitiesByUsername(user.user.username).then(
+          (prevChallengesFromApi) => {
+            setIsLoading(false);
+            setApiPreviousActivities(prevChallengesFromApi);
+          }
+        )
+      : getActivitiesByUsername(route.params.username).then(
+          (prevChallengesFromApi) => {
+            setIsLoading(false);
+            setApiPreviousActivities(prevChallengesFromApi);
+          }
+        );
   }, []);
 
   if (isLoading) return <LoadingAnimation />;
@@ -34,7 +42,7 @@ const PreviousActivities = ({ navigation, route }) => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("UserMenu");
+          navigation.goBack();
         }}
         style={styles.button}
       >
