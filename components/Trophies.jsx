@@ -13,16 +13,22 @@ import ASSETS from "../utils/assets-object";
 import { UserContext } from "../contexts/UserContext";
 import { removeUnderscoresAndHyphens } from "../utils/formatting";
 import { getUser } from "../utils/api";
+import LoadingAnimation from "./LoadingAnimation";
 
 const Trophies = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [userTrophies, setUserTrophies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getUser(user.user.username).then((response) => {
       setUserTrophies(response.trophies);
+      setIsLoading(false);
     });
   }, []);
+
+  if (isLoading) return <LoadingAnimation />;
 
   return (
     <View style={styles.container}>

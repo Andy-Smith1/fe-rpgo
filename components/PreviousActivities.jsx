@@ -10,19 +10,25 @@ import { UserContext } from "../contexts/UserContext";
 import { getActivitiesByUsername } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
 import { msToTime } from "../utils/formatting";
+import LoadingAnimation from "./LoadingAnimation";
 
 const PreviousActivities = ({ navigation }) => {
   const [apiPreviousActivities, setApiPreviousActivities] = useState([]);
   const isFocused = useIsFocused();
   const { user } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     getActivitiesByUsername(user.username).then((prevChallengesFromApi) => {
+      setIsLoading(false);
       setApiPreviousActivities(prevChallengesFromApi);
       console.log(user.username);
       console.log("refreshed");
     });
   }, []);
+
+  if (isLoading) return <LoadingAnimation />;
 
   return (
     <View style={styles.container}>
