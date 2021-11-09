@@ -79,3 +79,8 @@ export const getUser = async (username) => {
   const { data } = await rpgo.get(`/users/${username}`);
   return data.user;
 };
+
+export const getAllUsers = async () => {
+  const { data } = await rpgo.get(`/users`);
+  return data.users;
+};
