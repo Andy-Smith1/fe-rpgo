@@ -21,6 +21,9 @@ const ASSETS = {
   "Strong-Knight": require("../assets/Art-Assets/Strong-Knight/Strong-Knight.gif"),
   Witch: require("../assets/Art-Assets/Witch/Witch.gif"),
   Loading: require("../assets/Art-Assets/Minotaur/Minotaur(Loading).gif"),
+  Title_BG: require("../assets/Art-Assets/title-bg.png"),
+  Title_BG_w_title: require("../assets/Art-Assets/title-bg-w-title.png"),
+  RP_GO_title: require("../assets/Art-Assets/RP-GO-title.png")
 };
 
 export default ASSETS;

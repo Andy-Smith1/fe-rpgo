@@ -18,6 +18,7 @@ import { UserContext } from "./contexts/UserContext";
 import { LogBox } from "react-native";
 import UserMenu from "./components/UserMenu";
 import UserMenuSprites from "./components/UserMenuSprites";
+import LandingPage from "./components/LandingPage";
 import FellowAdventurers from "./components/FellowAdventurers";
 
 const Stack = createNativeStackNavigator();
@@ -39,7 +40,7 @@ export default function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="LandingPage"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Map" component={Map} />
@@ -47,10 +48,12 @@ export default function App() {
               name="ActiveChallengeMap"
               component={ActiveChallengeMap}
             />
+            <Stack.Screen name="LandingPage" component={LandingPage} />
             <Stack.Screen name="Challenges" component={Challenges} />
             <Stack.Screen name="UserMenu" component={UserMenu} />
             <Stack.Screen name="UserMenuSprites" component={UserMenuSprites} />
             <Stack.Screen name="Trophies" component={Trophies} />
+
             <Stack.Screen
               name="PreviousActivities"
               component={PreviousActivities}

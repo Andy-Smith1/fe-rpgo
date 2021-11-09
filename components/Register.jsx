@@ -63,6 +63,14 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("LandingPage");
+        }}
+        style={styles.backButton}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>Register</Text>
 
       <Text style={styles.description}>Choose a sprite!</Text>
@@ -147,6 +155,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#536b78",
     padding: 20,
     justifyContent: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top:2,
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
   button: {
     padding: 10,

@@ -34,6 +34,14 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("LandingPage");
+        }}
+        style={styles.backButton}
+      >
+        <Text style={styles.back}>&lt;</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -78,6 +86,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#536b78",
     padding: 20,
     justifyContent: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top:2,
+    zIndex: 2,
+  },
+  back: {
+    color: "white",
+    fontFamily: "GameFont",
+    fontSize: 40,
+    padding: 10,
   },
   loginButton: {
     padding: 10,
