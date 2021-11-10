@@ -26,7 +26,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [user, setUser] = useState(null);
 
-  //the below line will remove all warnings on the mobile app, will be handy when testing
+  //the below line will remove all warnings on the mobile app, still displayed in terminal.
   LogBox.ignoreAllLogs();
 
   let [fontsLoaded, error] = useFonts({
