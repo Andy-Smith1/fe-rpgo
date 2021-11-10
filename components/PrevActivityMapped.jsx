@@ -33,10 +33,6 @@ const PrevActivityMapped = ({ route, navigation }) => {
         }}
         provider={MapView.PROVIDER_GOOGLE}
       >
-        {/* <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2}>
-            <Image source={require("../assets/Art-Assets/Reaper/Reaper.gif")} />
-          </MapView.Marker> */}
-
         <Polyline
           coordinates={polylineArray}
           strokeColor="red"

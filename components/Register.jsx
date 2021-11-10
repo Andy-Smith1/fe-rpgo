@@ -48,7 +48,7 @@ const Register = ({ navigation }) => {
           current_challenge: { name: "no challenge selected" },
         })
         .catch(() => errorAlert());
-      console.log(result.data);
+
       setNewUsername("");
       setNewPassword("");
       setConfirmedPassword("");

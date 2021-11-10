@@ -17,11 +17,9 @@ import ASSETS from "../utils/assets-object";
 const LandingPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* <ImageBackground source={ASSETS["Title_BG_w_title"]} style={styles.background}> */}
       <ImageBackground source={ASSETS["Title_BG"]} style={styles.background}>
-        {/* <View style={styles.logoContainer}> */}
         <Image source={ASSETS["RP_GO_title"]} style={styles.logo} />
-        {/* </View> */}
+
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => {
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#536b78",
-    // padding: 20,
+
     justifyContent: "center",
   },
   loginButton: {
@@ -69,7 +67,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: Dimensions.get("window").width / 1.5,
-    height:80,
+    height: 80,
     alignSelf: "center",
     resizeMode: "contain",
     margin: 20,
