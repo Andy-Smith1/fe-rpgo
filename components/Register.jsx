@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  Dimensions,
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
@@ -73,9 +74,12 @@ const Register = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.title}>Register</Text>
 
-      <Text style={styles.description}>{"<"} Choose a sprite! {">"}</Text>
-      <View>
+      <Text style={styles.description}>
+        {"<"} Choose a sprite! {">"}
+      </Text>
+      <View style={styles.spriteContainer}>
         <FlatList
+          style={styles.spriteContainer}
           data={spritesArray}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -83,9 +87,7 @@ const Register = ({ navigation }) => {
             return (
               <TouchableOpacity
                 style={
-                  item === sprite
-                    ? styles.currUserSprite
-                    : styles.spriteButton
+                  item === sprite ? styles.currUserSprite : styles.spriteButton
                 }
                 onPress={() => {
                   setSprite(item);
@@ -103,51 +105,52 @@ const Register = ({ navigation }) => {
           {removeUnderscoresAndHyphens(sprite)}
         </Text>
       )}
+      <View style={styles.form}>
+        <TextInput
+          style={styles.input}
+          placeholder="Choose a username..."
+          onChangeText={setNewUsername}
+          defaultValue={newUsername}
+        />
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          placeholder="Choose a password..."
+          onChangeText={setNewPassword}
+          defaultValue={newPassword}
+        />
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          placeholder="Confirm password..."
+          onChangeText={setConfirmedPassword}
+          defaultValue={confirmedPassword}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Choose a username..."
-        onChangeText={setNewUsername}
-        defaultValue={newUsername}
-      />
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        placeholder="Choose a password..."
-        onChangeText={setNewPassword}
-        defaultValue={newPassword}
-      />
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        placeholder="Confirm password..."
-        onChangeText={setConfirmedPassword}
-        defaultValue={confirmedPassword}
-      />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handleRegistration(
+              newUsername,
+              newPassword,
+              confirmedPassword,
+              sprite
+            );
+          }}
+        >
+          <Text style={styles.description}>Register!</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          handleRegistration(
-            newUsername,
-            newPassword,
-            confirmedPassword,
-            sprite
-          );
-        }}
-      >
-        <Text style={styles.description}>Register!</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.description}>Already registered?</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-      >
-        <Text style={styles.description}>Login</Text>
-      </TouchableOpacity>
+        <Text style={styles.description}>Already registered?</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
+        >
+          <Text style={styles.description}>Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -157,7 +160,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#536b78",
-    padding: 20,
     justifyContent: "center",
   },
   backButton: {
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     color: "white",
-    margin: 20,
+    margin: 12,
     fontFamily: "GameFont",
     borderColor: "white",
     borderStyle: "solid",
@@ -214,13 +216,12 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     maxHeight: 100,
     alignSelf: "center",
-    // padding:3,
   },
   spriteButton: {
     justifyContent: "space-evenly",
     width: 103,
     height: 103,
-    // padding: 20,
+
     color: "white",
     margin: 10,
     borderColor: "white",
@@ -242,7 +243,16 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     backgroundColor: "#FFE95F",
     shadowColor: "yellow",
-    shadowRadius: 20,
+    shadowRadius: 15,
     shadowOpacity: 0.5,
+  },
+  spriteContainer: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    width: Dimensions.get("window").width,
+  },
+  form: {
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
