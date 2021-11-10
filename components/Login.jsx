@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 
 const Login = ({ navigation }) => {
@@ -14,6 +15,7 @@ const Login = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState("");
   const [err, setErr] = useState("");
   const { user, setUser } = useContext(UserContext);
+  const isFocused = useIsFocused();
 
   const handleLogin = async () => {
     setErr("");
@@ -30,7 +32,11 @@ const Login = ({ navigation }) => {
       setNewUsername("");
       setNewPassword("");
     }
+
   };
+  useEffect(() => {
+    if(user) navigation.navigate("Map")
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
