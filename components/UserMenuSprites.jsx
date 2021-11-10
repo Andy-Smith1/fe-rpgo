@@ -82,6 +82,11 @@ const UserMenuSprites = ({ navigation }) => {
               }}
             >
               <Image source={ASSETS[item]} style={styles.sprite} />
+              <Text
+                style={item === currSprite ? styles.selectedText : styles.text}
+              >
+                {item}
+              </Text>
             </TouchableOpacity>
           );
         }}
@@ -98,8 +103,7 @@ const styles = StyleSheet.create({
   },
   spriteList: {
     alignSelf: "center",
-    padding:20
-
+    padding: 20,
   },
   sprite: {
     maxWidth: 150,
@@ -198,6 +202,18 @@ const styles = StyleSheet.create({
     fontFamily: "GameFont",
     fontSize: 40,
     padding: 10,
+  },
+  text: {
+    fontFamily: "GameFont",
+    fontSize: 18,
+    color: "#cee5f2",
+    textAlign: "center",
+  },
+  selectedText: {
+    fontFamily: "GameFont",
+    fontSize: 18,
+    color: "#536b78",
+    textAlign: "center",
   },
 });
 
