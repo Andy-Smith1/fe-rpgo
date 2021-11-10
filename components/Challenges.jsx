@@ -14,6 +14,7 @@ import { useIsFocused } from "@react-navigation/native";
 import ASSETS from "../utils/assets-object";
 import { removeUnderscoresAndHyphens } from "../utils/formatting";
 import LoadingAnimation from "./LoadingAnimation";
+import errorAlert from "../utils/error-alert";
 
 const Challenges = ({ navigation }) => {
   const [selectedChallenge, setSelectedChallenge] = useState(null);
@@ -24,17 +25,22 @@ const Challenges = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    getChallengesByUser(user).then((challengesFromApi) => {
-      setIsLoading(false);
-      if (Platform.OS === "ios") {
-        setApiChallenges(challengesFromApi);
-      } else {
-        const removedStepChallenges = challengesFromApi.filter(
-          (challenge) => challenge.activity_type !== "stepCount"
-        );
-        setApiChallenges(removedStepChallenges);
-      }
-    });
+    getChallengesByUser(user)
+      .then((challengesFromApi) => {
+        setIsLoading(false);
+        if (Platform.OS === "ios") {
+          setApiChallenges(challengesFromApi);
+        } else {
+          const removedStepChallenges = challengesFromApi.filter(
+            (challenge) => challenge.activity_type !== "stepCount"
+          );
+          setApiChallenges(removedStepChallenges);
+        }
+      })
+      .catch(() => {
+        errorAlert();
+        navigation.navigate("Map");
+      });
   }, [isFocused]);
 
   if (isLoading) return <LoadingAnimation />;

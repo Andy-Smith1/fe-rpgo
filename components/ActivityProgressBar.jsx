@@ -7,6 +7,7 @@ import {
   postActivity,
 } from "../utils/api";
 import { UserContext } from "../contexts/UserContext";
+import errorAlert from "../utils/error-alert";
 
 const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
   const [challengeComplete, setChallengeComplete] = useState(false);
@@ -69,11 +70,15 @@ const ActivityProgressBar = ({ activeChallenge, progress, navigation }) => {
         setCompletedChallengeID(postedActivity._id);
       })
       .catch((err) => {
-        console.log(err);
+        errorAlert();
+        navigation.navigate("Map");
       });
     patchUserXP(user.user.username, activeChallenge.xp)
       .then(() => {})
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        errorAlert;
+        navigation.navigate("Map");
+      });
     setChallengeComplete(true);
     challengeCompleteAlert();
   }

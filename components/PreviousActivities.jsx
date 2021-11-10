@@ -11,6 +11,7 @@ import { getActivitiesByUsername } from "../utils/api";
 import { useIsFocused } from "@react-navigation/native";
 import { msToTime } from "../utils/formatting";
 import LoadingAnimation from "./LoadingAnimation";
+import errorAlert from "../utils/error-alert";
 
 const PreviousActivities = ({ navigation, route }) => {
   const [apiPreviousActivities, setApiPreviousActivities] = useState([]);
@@ -22,12 +23,15 @@ const PreviousActivities = ({ navigation, route }) => {
     setIsLoading(true);
 
     !route.params
-      ? getActivitiesByUsername(user.user.username).then(
-          (prevChallengesFromApi) => {
+      ? getActivitiesByUsername(user.user.username)
+          .then((prevChallengesFromApi) => {
             setIsLoading(false);
             setApiPreviousActivities(prevChallengesFromApi);
-          }
-        )
+          })
+          .catch(() => {
+            errorAlert();
+            navigation.goBack();
+          })
       : getActivitiesByUsername(route.params.username).then(
           (prevChallengesFromApi) => {
             setIsLoading(false);

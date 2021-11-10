@@ -36,9 +36,14 @@ const UserMenuSprites = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading;
-    getUser(user.user.username).then((response) => {
-      setCurrSprite(response.sprite);
-    });
+    getUser(user.user.username)
+      .then((response) => {
+        setCurrSprite(response.sprite);
+      })
+      .catch(() => {
+        errorAlert();
+        navigation.goBack();
+      });
   }, [isFocused]);
 
   const handleSpritePress = async (sprite) => {
