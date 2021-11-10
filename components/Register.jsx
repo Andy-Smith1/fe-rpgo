@@ -40,7 +40,7 @@ const Register = ({ navigation }) => {
           sprite: sprite,
           xp: 0,
           trophies: [],
-          bio: newBio,
+          bio: "No bio",
           total_distance_covered: 0,
           total_steps: 0,
           total_elevation_gain: 0,
@@ -73,7 +73,7 @@ const Register = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.title}>Register</Text>
 
-      <Text style={styles.description}>Choose a sprite!</Text>
+      <Text style={styles.description}>{"<"} Choose a sprite! {">"}</Text>
       <View>
         <FlatList
           data={spritesArray}
@@ -82,7 +82,11 @@ const Register = ({ navigation }) => {
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                //style={styles.spriteButton}
+                style={
+                  item === sprite
+                    ? styles.currUserSprite
+                    : styles.spriteButton
+                }
                 onPress={() => {
                   setSprite(item);
                 }}
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top:2,
+    top: 2,
     zIndex: 2,
   },
   back: {
@@ -225,6 +229,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#7c98b3",
     shadowColor: "black",
     shadowRadius: 10,
+    shadowOpacity: 0.5,
+  },
+  currUserSprite: {
+    justifyContent: "space-evenly",
+    width: 103,
+    height: 103,
+    color: "white",
+    margin: 15,
+    borderColor: "white",
+    borderStyle: "solid",
+    borderWidth: 3,
+    backgroundColor: "#FFE95F",
+    shadowColor: "yellow",
+    shadowRadius: 20,
     shadowOpacity: 0.5,
   },
 });
