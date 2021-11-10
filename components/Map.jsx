@@ -5,6 +5,8 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  BackHandler,
+  Alert,
 } from "react-native";
 import ASSETS from "../utils/assets-object";
 import MapView, { Marker } from "react-native-maps";
@@ -15,7 +17,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useIsFocused } from "@react-navigation/native";
 import { getUser } from "../utils/api";
 
-const Map = ({ navigation }) => {
+const Map = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const { user } = useContext(UserContext);
@@ -79,7 +81,12 @@ const Map = ({ navigation }) => {
           initialRegion={location}
           provider={MapView.PROVIDER_GOOGLE}
         >
-          <MapView.Marker coordinate={location} minDelta={0.5} maxDelta={2} style={styles.mapMarkerContainer}>
+          <MapView.Marker
+            coordinate={location}
+            minDelta={0.5}
+            maxDelta={2}
+            style={styles.mapMarkerContainer}
+          >
             <Image source={ASSETS[userData.sprite]} style={styles.mapMarker} />
           </MapView.Marker>
         </MapView>
