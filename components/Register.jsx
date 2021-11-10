@@ -73,9 +73,12 @@ const Register = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.title}>Register</Text>
 
-      <Text style={styles.description}>{"<"} Choose a sprite! {">"}</Text>
-      <View>
+      <Text style={styles.description}>
+        {"<"} Choose a sprite! {">"}
+      </Text>
+      <View style={styles.spriteContainer}>
         <FlatList
+          style={styles.spriteContainer}
           data={spritesArray}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -83,9 +86,7 @@ const Register = ({ navigation }) => {
             return (
               <TouchableOpacity
                 style={
-                  item === sprite
-                    ? styles.currUserSprite
-                    : styles.spriteButton
+                  item === sprite ? styles.currUserSprite : styles.spriteButton
                 }
                 onPress={() => {
                   setSprite(item);
@@ -214,13 +215,12 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     maxHeight: 100,
     alignSelf: "center",
-    // padding:3,
   },
   spriteButton: {
     justifyContent: "space-evenly",
     width: 103,
     height: 103,
-    // padding: 20,
+
     color: "white",
     margin: 10,
     borderColor: "white",
@@ -242,7 +242,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     backgroundColor: "#FFE95F",
     shadowColor: "yellow",
-    shadowRadius: 20,
+    shadowRadius: 15,
     shadowOpacity: 0.5,
+  },
+  spriteContainer: {
+    paddingTop: 15,
+    paddingBottom: 15,
   },
 });
