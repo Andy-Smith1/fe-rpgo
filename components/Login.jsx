@@ -19,9 +19,11 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     setErr("");
-    const result = await axios.get(
-      `https://rp-go.herokuapp.com/api/users/${newUsername}`
-    );
+    const result = await axios
+      .get(`https://rp-go.herokuapp.com/api/users/${newUsername}`)
+      .catch(() => {
+        errorAlert();
+      });
     if (result.data.user.password === newPassword) {
       setUser(result.data);
       setNewUsername("");
@@ -32,10 +34,9 @@ const Login = ({ navigation }) => {
       setNewUsername("");
       setNewPassword("");
     }
-
   };
   useEffect(() => {
-    if(user) navigation.navigate("Map")
+    if (user) navigation.navigate("Map");
   }, [isFocused]);
 
   return (
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top:2,
+    top: 2,
     zIndex: 2,
   },
   back: {

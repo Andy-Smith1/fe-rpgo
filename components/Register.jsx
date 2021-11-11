@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import ASSETS from "../utils/assets-object";
 import { removeUnderscoresAndHyphens } from "../utils/formatting";
+import errorAlert from "../utils/error-alert";
 
 const Register = ({ navigation }) => {
   const [newUsername, setNewUsername] = useState("");
@@ -33,9 +34,8 @@ const Register = ({ navigation }) => {
   const handleRegistration = async () => {
     setErr("");
     if (newPassword === confirmedPassword) {
-      const result = await axios.post(
-        "https://rp-go.herokuapp.com/api/users/",
-        {
+      const result = await axios
+        .post("https://rp-go.herokuapp.com/api/users/", {
           username: newUsername,
           password: newPassword,
           sprite: sprite,
@@ -46,8 +46,8 @@ const Register = ({ navigation }) => {
           total_steps: 0,
           total_elevation_gain: 0,
           current_challenge: { name: "no challenge selected" },
-        }
-      );
+        })
+        .catch(() => errorAlert());
       console.log(result.data);
       setNewUsername("");
       setNewPassword("");

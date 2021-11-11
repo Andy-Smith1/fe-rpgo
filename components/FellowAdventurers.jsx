@@ -10,14 +10,20 @@ import {
 } from "react-native";
 import { getAllUsers } from "../utils/api";
 import ASSETS from "../utils/assets-object";
+import errorAlert from "../utils/error-alert";
 
 const FellowAdventurers = ({ navigation }) => {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    getAllUsers().then((usersFromApi) => {
-      setUsersList(usersFromApi);
-    });
+    getAllUsers()
+      .then((usersFromApi) => {
+        setUsersList(usersFromApi);
+      })
+      .catch(() => {
+        errorAlert();
+        navigation.navigate("UserMenu");
+      });
   }, []);
 
   return (

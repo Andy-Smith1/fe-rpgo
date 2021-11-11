@@ -22,10 +22,15 @@ const Trophies = ({ navigation }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    getUser(user.user.username).then((response) => {
-      setUserTrophies(response.trophies);
-      setIsLoading(false);
-    });
+    getUser(user.user.username)
+      .then((response) => {
+        setUserTrophies(response.trophies);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        errorAlert();
+        navigation.goBack();
+      });
   }, []);
 
   if (isLoading) return <LoadingAnimation />;
